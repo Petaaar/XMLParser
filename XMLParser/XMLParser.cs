@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Xml;
 
 namespace XMLParser
@@ -45,7 +44,7 @@ namespace XMLParser
             #endregion Namespace
 
             #region Reference
-            if (node.Name == "ref")
+            if (node.Name == "ref" && !this.noDependencies) //non-empty "dependencies" tag..
                 if (node.Attributes["using"] != null) //parsing all "using" directives
                     return Using(node.Attributes["using"].Value);
             #endregion Reference
@@ -63,7 +62,7 @@ namespace XMLParser
             #endregion Class
 
             #region Item
-            if (node.Name == "item") //parsing PRIVATE fields
+            if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
                     if (node.InnerText != " ")
                         Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value} " + 
@@ -79,7 +78,7 @@ namespace XMLParser
             #endregion Encapsulation
 
             #region PublicItem
-            if (node.Name == "publicItem")//parsing publicItems property
+            if (node.Name == "publicItem" && !this.noPublicFields)//parsing publicItems property
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
                     if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
                         Console.WriteLine($"public {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
@@ -87,7 +86,7 @@ namespace XMLParser
             #endregion PublicItem
 
             #region Method
-            if (node.Name == "method")
+            if (node.Name == "method" && !this.noPrivateMethods)
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
                     if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
                         Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
@@ -95,7 +94,7 @@ namespace XMLParser
             #endregion Method
 
             #region PublicMethod
-            if (node.Name == "publicMethod")
+            if (node.Name == "publicMethod" && !this.noPublicMethods)
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
                     if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
                         Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
@@ -158,7 +157,7 @@ namespace XMLParser
             if (root is XmlElement)
             {
                 var searchRes = Search(root);
-                if (searchRes != "")
+                if (searchRes != string.Empty)
                     Console.WriteLine(searchRes);
             }
 
