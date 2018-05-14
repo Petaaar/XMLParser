@@ -64,9 +64,9 @@ namespace XMLParser
             #region Item
             if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    if (node.InnerText != " ")
-                        Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value} " + 
-                            $"{node.InnerText}");
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
             #endregion Item
 
             #region Encapsulation
@@ -80,9 +80,9 @@ namespace XMLParser
             #region PublicItem
             if (node.Name == "publicItem" && !this.noPublicFields)//parsing publicItems property
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
-                        Console.WriteLine($"public {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
-                            $" {node.InnerText}");
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
             #endregion PublicItem
 
             #region Method
