@@ -11,11 +11,24 @@ namespace XMLParser
     {
         #region Private
 
+        #region NO
+        //A private booleans to determine if anything listed down is equal to NULL
+        private readonly bool noDependencies = true;
+
+        private readonly bool noPrivateFields = true;
+
+        private readonly bool noPublicFields = true;
+
+        private readonly bool noPrivateMethods = true;
+
+        private readonly bool noPublicMethods = true;
+        #endregion NO
+
         private const string tab = "    ";
 
-        private string Namespace(string value) => $"namespace {value}" + "\n{";
+        private static string Namespace(string value) => $"namespace {value}" + "\n{";
 
-        private string Using(string collection) => $"{tab}using {collection};";
+        private static string Using(string collection) => $"{tab}using {collection};";
 
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
@@ -107,6 +120,31 @@ namespace XMLParser
             XmlDocument doc = new XmlDocument();
 
             doc.Load(path);
+
+            #region No-set
+            //setting the "NO"-region variables
+
+            if (doc.GetElementsByTagName("dependencies")[0] != null &&
+                doc.GetElementsByTagName("dependencies")[0].HasChildNodes)
+                this.noDependencies = false;
+
+            if (doc.GetElementsByTagName("privateFields")[0] != null &&
+                doc.GetElementsByTagName("privateFields")[0].HasChildNodes)
+                this.noPrivateFields = false;
+
+            if (doc.GetElementsByTagName("publicFields")[0] != null &&
+                doc.GetElementsByTagName("publicFields")[0].HasChildNodes)
+                this.noPublicFields = false;
+
+            if (doc.GetElementsByTagName("privateMethods")[0] != null &&
+                doc.GetElementsByTagName("privateMethods")[0].HasChildNodes)
+                this.noPrivateMethods = false;
+
+            if (doc.GetElementsByTagName("publicMethods")[0] != null &&
+                doc.GetElementsByTagName("publicMethods")[0].HasChildNodes)
+                this.noPublicMethods = false;
+
+            #endregion
 
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
         }
