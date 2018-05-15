@@ -23,6 +23,8 @@ namespace XMLParser
         private readonly bool noPublicMethods = true;
         #endregion NO
 
+        private const string error = "//ERROR:";
+
         private const string tab = "    ";
 
         private static string Namespace(string value) => $"namespace {value}" + "\n{";
@@ -47,6 +49,7 @@ namespace XMLParser
             if (node.Name == "ref" && !this.noDependencies) //non-empty "dependencies" tag..
                 if (node.Attributes["using"] != null) //parsing all "using" directives
                     return Using(node.Attributes["using"].Value);
+                else return $"{error} Missing \"using\" argument in \"<ref/>\" tag.";
             #endregion Reference
 
             #region Class
@@ -67,6 +70,7 @@ namespace XMLParser
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
+                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion Item
 
             #region Encapsulation
@@ -83,6 +87,7 @@ namespace XMLParser
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicItem
 
             #region Method
@@ -91,6 +96,7 @@ namespace XMLParser
                     return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
                     return new MethodParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
+                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion Method
 
             #region PublicMethod
@@ -99,6 +105,7 @@ namespace XMLParser
                     return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
                     return new MethodParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicMethod
 
             return "";
