@@ -5,6 +5,7 @@
     /// </summary>
     sealed class ItemParser
     {
+        #region Private
         private string type;
 
         private string returnType;
@@ -14,7 +15,9 @@
         private readonly bool isPrivate;
 
         private readonly string protectionLevel;
+        #endregion
 
+        #region Encapsulations
         public string Type { get => type; private set => type = value; }
 
         public string ReturnType { get => returnType; set => returnType = value; }
@@ -24,6 +27,8 @@
         public bool IsPrivate => isPrivate;
 
         public string ProtectionLevel => protectionLevel;
+        #endregion Encapsulations
+
 
         public ItemParser() : this(null, null, null, true) { }
 
