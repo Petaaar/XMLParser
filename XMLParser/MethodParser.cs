@@ -38,6 +38,8 @@
 
         public string Parse()
         {
+            if (type == null) //no type
+                return $"{protectionLevel} {returnType} {name}";
             return $"{protectionLevel} {type} {returnType} {name}";
         }
     }
