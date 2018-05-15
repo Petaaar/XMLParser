@@ -3,7 +3,7 @@
     /// <summary>
     /// A class that parses every type of field. Cannot be inherited.
     /// </summary>
-    sealed class ItemParser
+    sealed class ItemParser : IParser
     {
         #region Private
         private string type;
