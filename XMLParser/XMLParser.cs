@@ -88,17 +88,17 @@ namespace XMLParser
             #region Method
             if (node.Name == "method" && !this.noPrivateMethods)
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
-                        Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
-                            $" {node.InnerText}");
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                    return new MethodParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
             #endregion Method
 
             #region PublicMethod
             if (node.Name == "publicMethod" && !this.noPublicMethods)
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    if (node.Attributes["type"].Value != " " && node.Attributes["returnType"].Value != " " && node.InnerText != " ")
-                        Console.WriteLine($"private {node.Attributes["type"].Value} {node.Attributes["returnType"].Value}" +
-                            $" {node.InnerText}");
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                    return new MethodParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
             #endregion PublicMethod
 
             return "";
