@@ -5,6 +5,7 @@
     /// </summary>
     sealed class MethodParser : IParser
     {
+        #region Private
         private readonly string type;
 
         private readonly string returnType;
@@ -14,6 +15,19 @@
         private readonly bool isPrivate;
 
         private readonly string protectionLevel;
+        #endregion Private
+
+        #region Encapsulation
+        public string Type => type;
+
+        public string ReturnType => returnType;
+
+        public string Name => name;
+
+        public bool IsPrivate => isPrivate;
+
+        public string ProtectionLevel => protectionLevel;
+        #endregion Encapsulation
 
         public MethodParser() : this(null,null,null,true) { }
 
