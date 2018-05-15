@@ -3,7 +3,7 @@
     /// <summary>
     /// Parses all methods, written in the XML(.sashs) file. Cannot be inherited.
     /// </summary>
-    sealed class MethodParser
+    sealed class MethodParser : IParser
     {
         private readonly string type;
 
@@ -34,6 +34,11 @@
             if (this.isPrivate)
                 this.protectionLevel = "private";
             else this.protectionLevel = "public";
+        }
+
+        public string Parse()
+        {
+            return $"{protectionLevel} {type} {returnType} {name}";
         }
     }
 }

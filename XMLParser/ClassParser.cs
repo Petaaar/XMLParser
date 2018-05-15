@@ -3,7 +3,7 @@
     /// <summary>
     /// Parses the "class" property of the XML file.
     /// </summary>
-    class ClassParser
+    class ClassParser : IParser
     {
         #region Private
 
