@@ -23,11 +23,16 @@ namespace XMLParser
         private readonly bool noPublicMethods = true;
         #endregion NO
 
+        /// <summary>
+        /// <see cref="System.Collections.Generic.List{string}"/> containing everything from the .sashs file.
+        /// </summary>
+        private System.Collections.Generic.List<string> xmlContent;
+        
         private const string error = "//ERROR:";
 
         private const string tab = "    ";
 
-        private static string Namespace(string value) => $"namespace {value}" + "\n{";
+        private static string Namespace(string value) => $"namespace {value}";
 
         private static string Using(string collection) => $"{tab}using {collection};";
 
@@ -108,22 +113,42 @@ namespace XMLParser
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicMethod
 
-            return "";
+            return string.Empty;
         }
 
-        #endregion
+        private void TraceContent()
+        {
+            foreach (string item in xmlContent)
+                ClassWtriter.Parse(item);
+        }
+        /*
+         * [0]->namespace SASH.Custom
+            {
+            [1]->    using System;
+            [2]->    using System.IO;
+            [3]->    using System.Collections.Generic;
+            [4]->private/public/internal static/virtual/abstract/none className
+            [5]->private static/readonly/const/none allTypes/void path
+            [6]->private static/readonly/const/none allTypes/void path1
+            [7]->private static/readonly/const/none allTypes/void path2
+            [8]->public static/readonly/const/none allTypes/void itemName
+            [9]->public static/readonly/const/none allTypes/void itemName1
+            [10]->public static/readonly/const/none allTypes/void itemName2
+            [11]->private static/virtual/abstract/none allTypes/void privateMethodName
+            [12]->public static/virtual/abstract/none allTypes/void publicMethodName
+         */
+        #endregion Private
 
         #region Public
         public static void Main() => new XMLParser();
 
-        public XMLParser() : this(@"c:\Users\petar\Desktop\Example.sashs")
-        {
-
-        }
+        public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Example.sashs") { }
 
         public XMLParser(string path)
         {
             XmlDocument doc = new XmlDocument();
+
+            xmlContent = new System.Collections.Generic.List<string>();
 
             doc.Load(path);
 
@@ -153,6 +178,9 @@ namespace XMLParser
             #endregion
 
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
+
+            xmlContent.Add("}"); //add the closing brace ;)
+            TraceContent();
         }
 
         /// <summary>
@@ -165,14 +193,15 @@ namespace XMLParser
             {
                 var searchRes = Search(root);
                 if (searchRes != string.Empty)
-                    Console.WriteLine(searchRes);
+                    if (!searchRes.StartsWith(tab) && !searchRes.StartsWith("namespace"))
+                        xmlContent.Add(tab + searchRes);
+                    else xmlContent.Add(searchRes);
             }
 
             if (root.HasChildNodes)
                 ParseXML(root.FirstChild);
             if (root.NextSibling != null)
                 ParseXML(root.NextSibling);
-
         }
         #endregion
         
