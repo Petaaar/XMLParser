@@ -79,12 +79,12 @@
         public string Parse()
         { 
             if (type == null && protectionLevel != null) //has only protection level
-                return $"{this.protectionLevel} {className}";
+                return $"C{this.protectionLevel} {className}";
             if (type == null && protectionLevel == null) //has only name
-                return $"{className}";
+                return $"C{className}";
             if (type != null && protectionLevel == null) //has only type
-                return $"{type} {className}";
-            return $"{protectionLevel} {type} {className}"; //have everything;
+                return $"C{type} {className}";
+            return $"C{protectionLevel} {type} {className}"; //have everything;
         }
 
         #endregion Public
