@@ -40,7 +40,7 @@
                 return Namespace(item);
             // Pointless to check for "using";
 
-            if (item.StartsWith($"    C")) //class checking
+            if (item.StartsWith($"{tabulation}C")) //class checking
             {
 
                 item = item.Remove(0, 5); //remove 'C' from the item :D
@@ -74,6 +74,25 @@
                     return Class(props[0], props[1], props[2]);
             }
 
+            if (item.StartsWith($"{doubleTab}N") && !item.StartsWith($"{doubleTab}NM")) //private field
+            {
+                return "private field!";
+            }
+
+            if (item.StartsWith($"{doubleTab}P") && !item.StartsWith($"{doubleTab}PM")) //public field
+            {
+                return "public field!";
+            }
+
+            else if (item.StartsWith($"{doubleTab}NM")) //private method
+            {
+                return "private method!";
+            }
+
+            else if (item.StartsWith($"{doubleTab}PM")) //public method
+            {
+                return "public method!";
+            }
 
             return item;
         }
@@ -113,6 +132,8 @@
         }
         #endregion CLASS
 
-        #endregion
+
+
+        #endregion Checkers
     }
 }
