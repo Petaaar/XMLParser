@@ -54,9 +54,11 @@
 
         public string Parse()
         {
+            char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
+
             if (type == null) //no type
-                return $"        {protectionLevel} {returnType} {name}";
-            return $"        {protectionLevel} {type} {returnType} {name}";
+                return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
+            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
         }
     }
 }
