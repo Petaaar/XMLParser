@@ -1,10 +1,12 @@
 ﻿namespace XMLParser
 {
-    static class ClassWtriter
+    class ClassWtriter
     {
         private const string pathTo = @"C:\Users\petar\source\repos\XMLParser\XMLParser\testFile.txt";
 
         private const string tabulation = "    ";
+
+        private const string doubleTab = "        "; //double tabulation
 
         public static void Parse(string item)
         {
@@ -36,6 +38,43 @@
         {
             if (item.StartsWith("namespace"))
                 return Namespace(item);
+            // Pointless to check for "using";
+
+            if (item.StartsWith($"    C")) //class checking
+            {
+
+                item = item.Remove(0, 5); //remove 'C' from the item :D
+
+                var properties = item.Split(new char[] {' '}, System.StringSplitOptions.None);
+
+                var list = new System.Collections.Generic.List<string>();
+
+                foreach (string innerItem in properties)
+                    if (innerItem == string.Empty)
+                        continue;
+                    else list.Add(innerItem);
+
+                var props = list.ToArray();
+
+                list.Clear();
+
+                if (props.Length == 1)
+                    return Class(item);
+               
+                if (props.Length == 2)
+                {
+                    if (props[1] == string.Empty) throw new System.ArgumentException("EMPTY CLASS NAME!");
+                    else if (props[0] == "private" || props[0] == "public" || props[0] == "internal")
+                        return Class(props[0], props[1]); // public class className
+                    else if (props[0] == "static" || props[0] == "sealed" || props[0] == "abstract")
+                        return Class(props[0], props[1], 0); //static class className
+                }
+
+                if (props.Length == 3)
+                    return Class(props[0], props[1], props[2]);
+            }
+
+
             return item;
         }
 
@@ -44,7 +83,35 @@
         private static string Namespace(string item)
             => item + "\n{";
 
-        private static string ok() => "";
+        #region CLASS
+        private static string Class(string className)
+        {
+            if (className.Length == 0)
+                throw new System.ArgumentNullException("EMPTY CLASS NAME!");
+            return $"{tabulation}class {className}" + "\n" + tabulation + '{';
+        }
+
+        private static string Class(string protectionLevel, string className)
+        {
+            if (className.Length == 0)
+                throw new System.ArgumentNullException("EMPTY CLASS NAME!");
+            return $"{tabulation}{protectionLevel} class {className}" + "\n" + tabulation + '{';
+        }
+
+        private static string Class(string classType, string className, int placeholder)
+        {
+            if (className.Length == 0)
+                throw new System.ArgumentNullException("EMPTY CLASS NAME!");
+            return $"{tabulation}{classType} class {className}" + "\n" + tabulation + '{';
+        }
+
+        private static string Class(string protectionLevel, string type, string className)
+        {
+            if (className.Length == 0)
+                throw new System.ArgumentNullException("EMPTY CLASS NAME!");
+            return $"{tabulation}{protectionLevel} {type} class {className}" + "\n" + tabulation + '{';
+        }
+        #endregion CLASS
 
         #endregion
     }
