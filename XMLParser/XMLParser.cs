@@ -36,6 +36,10 @@ namespace XMLParser
 
         private static string Using(string collection) => $"{tab}using {collection};";
 
+        private readonly bool encapsulate;
+
+        private string Encapsulate() => (encapsulate) ? "true" : "false";
+
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
         /// </summary>
@@ -143,7 +147,7 @@ namespace XMLParser
         public static void Main() => new XMLParser();
 
         public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Propper.sashs") { }
-
+        
         public XMLParser(string path)
         {
             XmlDocument doc = new XmlDocument();
@@ -180,6 +184,7 @@ namespace XMLParser
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
 
             xmlContent.Add(tab+"}\n}"); //add the closing braces ;)
+            xmlContent.Add(Encapsulate());
             TraceContent();
         }
 

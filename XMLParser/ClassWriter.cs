@@ -9,6 +9,8 @@
 
         private const string doubleTab = "        "; //double tabulation
 
+        private static bool encapsulate;
+
         public static void Parse(string item)
         {
             if (item is string && item.Length != 0)
@@ -37,6 +39,9 @@
         /// <returns>string</returns>
         public static string CheckItem(string item)
         {
+            if (item == "true")
+                encapsulate = true;
+
             if (item.StartsWith("namespace"))
                 return Namespace(item);
             // Pointless to check for "using";
