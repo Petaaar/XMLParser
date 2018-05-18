@@ -11,11 +11,19 @@
 
         private static bool encapsulate;
 
+        private static System.Collections.Generic.List<string> privateFields;
+
         public static void Parse(string item)
         {
             if (item is string && item.Length != 0)
                 WriteInFile(item);
             else System.Console.WriteLine("ERROR!");
+        }
+
+        public void SetEncapsulation(string TrueFalse)
+        {
+            if (TrueFalse == "true")
+                encapsulate = true;
         }
 
         public static void WriteInFile(string item)
@@ -45,6 +53,8 @@
             if (item.StartsWith("namespace"))
                 return Namespace(item);
             // Pointless to check for "using";
+
+            privateFields = new System.Collections.Generic.List<string>();
 
             if (item.StartsWith($"{tabulation}C")) //class checking
             {
@@ -81,24 +91,16 @@
             }
 
             if (item.StartsWith($"{doubleTab}N") && !item.StartsWith($"{doubleTab}NM")) //private field
-            {
-                return "private field!";
-            }
+                return item.Remove(8, 1) + ';' + "\n";
 
             if (item.StartsWith($"{doubleTab}P") && !item.StartsWith($"{doubleTab}PM")) //public field
-            {
-                return "public field!";
-            }
+                return item.Remove(8, 1) + ';' + "\n";
 
             else if (item.StartsWith($"{doubleTab}NM")) //private method
-            {
-                return "private method!";
-            }
+                return item.Remove(8, 2) + ';' + "\n";
 
             else if (item.StartsWith($"{doubleTab}PM")) //public method
-            {
-                return "public method!";
-            }
+                return item.Remove(8, 2) + ';' + "\n";
 
             return item;
         }

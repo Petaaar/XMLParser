@@ -184,7 +184,6 @@ namespace XMLParser
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
 
             xmlContent.Add(tab+"}\n}"); //add the closing braces ;)
-            xmlContent.Add(Encapsulate());
             TraceContent();
         }
 
