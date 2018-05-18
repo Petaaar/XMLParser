@@ -1,7 +1,8 @@
 ﻿namespace XMLParser
 {
-    class ClassWtriter
+    sealed class ClassWtriter
     {
+
         private const string pathTo = @"C:\Users\petar\source\repos\XMLParser\XMLParser\testFile.txt";
 
         private const string tabulation = "    ";
