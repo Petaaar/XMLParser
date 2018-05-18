@@ -20,7 +20,7 @@
             else System.Console.WriteLine("ERROR!");
         }
 
-        public void SetEncapsulation(string TrueFalse)
+        public static void SetEncapsulation(string TrueFalse)
         {
             if (TrueFalse == "true")
                 encapsulate = true;

@@ -35,11 +35,7 @@ namespace XMLParser
         private static string Namespace(string value) => $"namespace {value}";
 
         private static string Using(string collection) => $"{tab}using {collection};";
-
-        private readonly bool encapsulate;
-
-        private string Encapsulate() => (encapsulate) ? "true" : "false";
-
+        
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
         /// </summary>
@@ -86,7 +82,7 @@ namespace XMLParser
             if (node.Name == "encapsulate") //encapsulation property
                 if (node.InnerText != null)
                     if (node.InnerText.ToLower() == "true" || node.InnerText.ToLower() == "false")
-                        Console.WriteLine(node.InnerText);
+                        ClassWtriter.SetEncapsulation(node.InnerText);
                     else Console.WriteLine("NO ENCAPSULATION!");
             #endregion Encapsulation
 
