@@ -7,7 +7,7 @@ This is a testing project, I'm trying to create a __fully - automated__ parser f
 working C# code.
 
 An example picture of the __*Example.sashs*__ file:  
-![example](https://user-images.githubusercontent.com/26832131/40060452-50abad82-585f-11e8-94cb-14930774a870.png)  
+![example](https://user-images.githubusercontent.com/26832131/40266916-9b52e760-5b5c-11e8-927f-4e35234c3803.png)  
 
 ### But how to use it?  
 
