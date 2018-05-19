@@ -60,8 +60,6 @@
                 if (classType == null || classType == "abstract")
                     return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
                 else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
-            if (classType != "abstract" || classType != null)
-                return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
             return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}()";
         }
     }
