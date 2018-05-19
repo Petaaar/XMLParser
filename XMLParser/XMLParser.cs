@@ -71,10 +71,17 @@ namespace XMLParser
 
             #region Item
             if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
-                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
-                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null
+                    & node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value,
+                        node.Attributes["value"].Value, node.InnerText).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
+                        node.Attributes["value"] == null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
+                        node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
+
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion Item
 
@@ -88,10 +95,12 @@ namespace XMLParser
 
             #region PublicItem
             if (node.Name == "publicItem" && !this.noPublicFields)//parsing publicItems property
-                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
-                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    return new ItemParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null &&
+                    node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText, false).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && 
+                    node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicItem
 

@@ -12,6 +12,8 @@
 
         private string name;
 
+        private string value;
+
         private readonly bool isPrivate;
 
         private readonly string protectionLevel;
@@ -22,30 +24,38 @@
 
         public string ReturnType { get => returnType; set => returnType = value; }
 
+        public string Value { get => value; set => this.value = value; }
+
         public string Name { get => name; set => name = value; }
 
         public bool IsPrivate => isPrivate;
 
         public string ProtectionLevel => protectionLevel;
         #endregion Encapsulations
-
-
+        
         public ItemParser() : this(null, null, null, true) { }
 
-        public ItemParser(string returnType, string name) : this(null, returnType, name, true) { }
-        
-        /// <param name="isPrivate">IF this is empty it's assigned to true.</param>
-        public ItemParser(string returnType, string name, bool isPrivate) : this(null, returnType, name, isPrivate) { }
+        public ItemParser(string returnType, string name) : this(null, returnType, null, name, true) { }
 
-        public ItemParser(string type, string returnType, string name) : this(type, returnType, name, true) { }
+        public ItemParser(string returnType, string value, string name) : this(null, returnType, value, name, true) { }
+
+        /// <param name="isPrivate">IF this is empty it's assigned to true.</param>
+        public ItemParser(string returnType, string value, string name, bool isPrivate) : this(null, returnType, value, name,  isPrivate) { }
+
+        public ItemParser(string type, string returnType, string value, string name) : this(type, returnType, name, value, true) { }
 
         /// <param name="isPrivate">If this parameter is null it's assigned to true.</param>
-        public ItemParser(string type, string returnType, string name, bool isPrivate)
+        public ItemParser(string type, string returnType, string value, string name, bool isPrivate)
         {
             this.type = type;
             this.returnType = returnType;
             this.name = name;
+            this.value = value;
             this.isPrivate = isPrivate;
+
+            System.Console.WriteLine("VALUE:"+value);
+            if (value == null) System.Console.WriteLine("VALUE IS NULL");
+            System.Console.WriteLine("NAME:"+name);
 
             if (this.isPrivate)
                 protectionLevel = "private";
@@ -57,8 +67,23 @@
             char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
 
             if (type == null) //no type
-                return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
-            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
+                if (returnType == "void" && value != null)
+                    return $"        {fieldLevel}{protectionLevel} {returnType} {name} = {value}";
+                else if (returnType == "void" && value == null)
+                    return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
+            if (returnType == "void")
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
+            else if (returnType == "string" && value != null) //MUST swap value and name...idk why..
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {value} = \"{name}\"";
+            else if (returnType == "bool" && value != null)
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
+            else if (returnType == "int" && value != null)
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
+            else if (returnType == "double" && value != null)
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
+            if (value == null)
+                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
+            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = \"{value}\"";
         }
     }
 }
