@@ -3,7 +3,7 @@
     sealed class ClassWtriter
     {
 
-        private const string pathTo = @"C:\Users\petar\source\repos\XMLParser\XMLParser\testFile.txt";
+        private const string pathTo = @"C:\Users\petar\source\repos\XMLParser\XMLParser\TestClass.cs";
 
         private const string tabulation = "    ";
 
@@ -11,13 +11,63 @@
 
         private static bool encapsulate;
 
+        private static uint refferenceCount;
+
+        private static uint refferenceIteration;
+
         private static System.Collections.Generic.List<string> privateFields;
+
+        /// <summary>
+        /// Contains the entire class.
+        /// </summary>
+        private static System.Collections.Generic.List<string> fullClass = new System.Collections.Generic.List<string>();
 
         public static void Parse(string item)
         {
             if (item is string && item.Length != 0)
-                WriteInFile(item);
+            {
+                SaveFileContent(item);
+                WriteFile(fullClass);
+            }
             else System.Console.WriteLine("ERROR!");
+        }
+
+        private static void WriteFile(System.Collections.Generic.List<string> fileContent)
+        {
+            refferenceIteration = 0;
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(pathTo))
+            {
+                foreach (string item in fileContent)
+                {
+                    if (item.EndsWith("\n{")) //namespace <NAME> \n {
+                    {
+                        writer.WriteLine(item.Remove(item.Length - 2, 2));
+                        writer.WriteLine("{");
+                    }
+                    else if (item.StartsWith($"{tabulation}using"))
+                    {
+                        refferenceIteration++;
+
+                        if (refferenceIteration == refferenceCount)
+                        {
+                            writer.WriteLine(item);
+                            writer.WriteLine();
+                        }
+                        else writer.WriteLine(item);
+                    }
+                    else if (item.EndsWith(tabulation + "{") && !item.EndsWith(tabulation + "}}"))
+                    {
+                        writer.WriteLine(item.Remove(item.Length - 5, 5));
+                        writer.WriteLine(tabulation + "{");
+                    }
+                    else if (item.EndsWith("}\n}"))
+                    {
+                        writer.WriteLine(item.Remove(item.Length - 1, 1));
+                        writer.WriteLine('}');
+                    }
+                    else  writer.WriteLine(item);
+                }
+            }
         }
 
         public static void SetEncapsulation(string TrueFalse)
@@ -26,12 +76,16 @@
                 encapsulate = true;
         }
 
-        public static void WriteInFile(string item)
+        public static void SetRefferenceCount(uint count) => refferenceCount = count;
+
+
+        public static void SaveFileContent(string item)
         {
             CheckDir(pathTo);
 
-            System.Console.WriteLine(CheckItem(item));
+            item = CheckItem(item);
 
+            fullClass.Add(item);
         }
 
         public static void CheckDir(string path)
@@ -52,7 +106,15 @@
 
             if (item.StartsWith("namespace"))
                 return Namespace(item);
-            // Pointless to check for "using";
+
+            if (item.StartsWith($"{tabulation}R"))
+            {
+                refferenceIteration++;
+
+                if (refferenceIteration == refferenceCount)
+                    return $"{item.Remove(4, 1)}\n";
+                return $"{item.Remove(4,1)}";
+            }
 
             privateFields = new System.Collections.Generic.List<string>();
 
@@ -139,8 +201,7 @@
             return $"{tabulation}{protectionLevel} {type} class {className}" + "\n" + tabulation + '{';
         }
         #endregion CLASS
-
-
+        
 
         #endregion Checkers
     }

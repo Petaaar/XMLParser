@@ -34,7 +34,9 @@ namespace XMLParser
 
         private static string Namespace(string value) => $"namespace {value}";
 
-        private static string Using(string collection) => $"{tab}using {collection};";
+        private static string Using(string collection) => $"{tab}Rusing {collection};";
+
+        private static int refferences;
         
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
@@ -53,7 +55,7 @@ namespace XMLParser
             #region Reference
             if (node.Name == "ref" && !this.noDependencies) //non-empty "dependencies" tag..
                 if (node.Attributes["using"] != null) //parsing all "using" directives
-                    return Using(node.Attributes["using"].Value);
+                { refferences++; return Using(node.Attributes["using"].Value); }
                 else return $"{error} Missing \"using\" argument in \"<ref/>\" tag.";
             #endregion Reference
 
@@ -118,25 +120,10 @@ namespace XMLParser
 
         private void TraceContent()
         {
+            ClassWtriter.SetRefferenceCount((uint)refferences);
             foreach (string item in xmlContent)
                 ClassWtriter.Parse(item);
         }
-        /*
-         * [0]->namespace SASH.Custom
-            {
-            [1]->    using System;
-            [2]->    using System.IO;
-            [3]->    using System.Collections.Generic;
-            [4]->private/public/internal static/virtual/abstract/none className
-            [5]->private static/readonly/const/none allTypes/void path
-            [6]->private static/readonly/const/none allTypes/void path1
-            [7]->private static/readonly/const/none allTypes/void path2
-            [8]->public static/readonly/const/none allTypes/void itemName
-            [9]->public static/readonly/const/none allTypes/void itemName1
-            [10]->public static/readonly/const/none allTypes/void itemName2
-            [11]->private static/virtual/abstract/none allTypes/void privateMethodName
-            [12]->public static/virtual/abstract/none allTypes/void publicMethodName
-         */
         #endregion Private
 
         #region Public
