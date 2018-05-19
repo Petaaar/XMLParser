@@ -15,6 +15,8 @@
         private readonly bool isPrivate;
 
         private readonly string protectionLevel;
+
+        private string classType = XMLParser.ClassType;
         #endregion Private
 
         #region Encapsulation
@@ -55,8 +57,12 @@
             char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
 
             if (type == null) //no type
-                return $"        {fieldLevel}M{protectionLevel} {returnType} {name}";
-            return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}";
+                if (classType == null || classType == "abstract")
+                    return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+                else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+            if (classType != "abstract" || classType != null)
+                return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+            return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}()";
         }
     }
 }

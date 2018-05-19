@@ -12,23 +12,32 @@ namespace SASH.Custom
     public abstract class MyClass
 
     {
-        private static string path;
+        private static string path = "HELLOO";
 
-        private int myNumber;
+        private  int myNumber;
 
-        private const string TAB;
+        private const string TAB = "    ";
 
-        public static string publicField;
+        public readonly int intField = 5;
 
-        public readonly int intField;
+        private  double sixAndAHalf = 6.5;
 
-        public double sixAndAHalf;
+        public static bool isItTrue = true;
 
-        private virtual bool IsItTrue;
+        private bool IsItTrue()
+        {
 
-        public override string ToString;
+        }
 
-        public void VoidMethod;
+        public string ToString()
+        {
+
+        }
+
+        public void VoidMethod()
+        {
+
+        }
 
     }
 

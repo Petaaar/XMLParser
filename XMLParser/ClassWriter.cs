@@ -17,6 +17,8 @@
 
         private static System.Collections.Generic.List<string> privateFields;
 
+        private static string classType = XMLParser.ClassType;
+
         /// <summary>
         /// Contains the entire class.
         /// </summary>
@@ -70,7 +72,16 @@
                         writer.WriteLine(item.Remove(item.Length - 1, 1));
                         writer.WriteLine('}');
                     }
-                    else  writer.WriteLine(item);
+                    else if (item.EndsWith("\n{\n}\n"))
+                    {
+                        writer.WriteLine(item.Remove(item.Length - 5, 5));
+                        writer.WriteLine(doubleTab + '{');
+                        writer.WriteLine();
+                        writer.WriteLine(doubleTab + '}');
+                        writer.WriteLine();
+                    }
+
+                    else writer.WriteLine(item);
                 }
             }
         }
@@ -163,11 +174,17 @@
             if (item.StartsWith($"{doubleTab}P") && !item.StartsWith($"{doubleTab}PM")) //public field
                 return item.Remove(8, 1) + ';' + "\n";
 
-            else if (item.StartsWith($"{doubleTab}NM")) //private method
+            else if (item.StartsWith($"{doubleTab}NM") && classType == "abstract") //private method
                 return item.Remove(8, 2) + ';' + "\n";
 
-            else if (item.StartsWith($"{doubleTab}PM")) //public method
+            else if (item.StartsWith($"{doubleTab}NM") && classType != "abstract") //private method
+                return item.Remove(8, 2) + "\n{\n}\n";
+
+            else if (item.StartsWith($"{doubleTab}PM") && classType == "abstract") //public method
                 return item.Remove(8, 2) + ';' + "\n";
+
+            else if (item.StartsWith($"{doubleTab}PM") && classType != "abstract") //public method
+                return item.Remove(8, 2) + "\n{\n}\n";
 
             return item;
         }

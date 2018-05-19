@@ -37,6 +37,10 @@ namespace XMLParser
         private static string Using(string collection) => $"{tab}Rusing {collection};";
 
         private static int refferences;
+
+        private static string classType;
+
+        public static string ClassType;
         
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
@@ -68,6 +72,8 @@ namespace XMLParser
                     return new ClassParser(node.Attributes["type"].Value, 0, node.Attributes["name"].Value).Parse();
                 else return new ClassParser(node.Attributes["name"].Value).Parse();
             #endregion Class
+
+            if (node.Name == "class" && node.Attributes["type"] != null) classType = node.Attributes["type"].Value;
 
             #region Item
             if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields

@@ -52,11 +52,7 @@
             this.name = name;
             this.value = value;
             this.isPrivate = isPrivate;
-
-            System.Console.WriteLine("VALUE:"+value);
-            if (value == null) System.Console.WriteLine("VALUE IS NULL");
-            System.Console.WriteLine("NAME:"+name);
-
+            
             if (this.isPrivate)
                 protectionLevel = "private";
             else protectionLevel = "public";
