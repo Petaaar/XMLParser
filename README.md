@@ -73,7 +73,7 @@ __The node name__ must be non-empty as well, it's field's name as well.
 ### The value="" argument   
 This is (maybe) the most important argument of the given node. It may be optional, as well as required.
 
-If the node is _CONST__ or __READONLY__-type node this argument is __*REQUIRED*__
-Else the __value__ argument is optional. 
+If the node is _CONST_ or __READONLY__-type node this argument is __*REQUIRED*__.  
+Else the __value__ argument is optional.   
 
-If the __value__ and the node's __RETUTN TYPE__ __*does not match*__ the field won't be created.
+If the __value__ and the node's __RETUTN TYPE__ __*does not match*__ the field won't be created.  
