@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--An example ".sashs" file to parse. Written by Petar Angelov - Petaaar(17.05.2018)-->
+<nameSpace name="SASH.Custom">
+	<dependencies>
+		<ref using="System"/>
+		<ref using="System.IO"/>
+		<ref using="System.Collections.Generic"/>
+	</dependencies> 
+	<class protectionLevel="public" type="static" name="MyClass">
+		<privateFields>
+			<item type="static" returnType="string">path</item>
+			<item returnType="int">myNumber</item>
+			<item type="const" returnType="string">TAB</item>
+		</privateFields>
+		<encapsulate>true</encapsulate>
+		<publicFields>
+			<publicItem type="static" returnType="string">publicField</publicItem>
+      <publicItem type="readonly" returnType="int">intField</publicItem>
+      <publicItem returnType="double">sixAndAHalf</publicItem>
+		</publicFields>
+		<privateMethods>
+			<method type="virtual" returnType="bool">IsItTrue</method>
+		</privateMethods>
+		<publicMethods>
+			<publicMethod type="override" returnType="string">ToString</publicMethod>
+      <publicMethod returnType="void">VoidMethod</publicMethod>
+		</publicMethods>
+	</class>
+</nameSpace>
