@@ -47,9 +47,7 @@ namespace XMLParser
             #region Namespace
             if (node.Name == "nameSpace") //parsing the working namespace
                 if (node.Attributes["name"] != null)
-                    if (node.Attributes["name"].Value == "SASH.Custom")
-                        return Namespace(node.Attributes["name"].Value);
-                    else return ("Invalid namespace!");
+                    return Namespace(node.Attributes["name"].Value);
             #endregion Namespace
 
             #region Reference
