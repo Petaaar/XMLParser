@@ -69,3 +69,11 @@ __*publicMethod*__ -> Represents a __public method__ of the class.
 type="" -> __*Optional*__ paramerer. Determines if the __method__ is __static__, __virtual__, __abstract__ or has no specified type.  
 returnType="" -> __*Required*__ parameter. If is empty or does not exists the __method__ __*won't be created*__. You will get error comment instead.   
 __The node name__ must be non-empty as well, it's field's name as well.  
+
+### The value="" argument   
+This is (maybe) the most important argument of the given node. It may be optional, as well as required.
+
+If the node is _CONST__ or __READONLY__-type node this argument is __*REQUIRED*__
+Else the __value__ argument is optional. 
+
+If the __value__ and the node's __RETUTN TYPE__ __*does not match*__ the field won't be created.

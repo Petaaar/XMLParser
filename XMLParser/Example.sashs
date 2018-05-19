@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--An example ".sashs" file to parse. Written by Petar Angelov - Petaaar(12.05.2018)-->
+<nameSpace name="SASH.Custom">
+	<dependencies>
+		<ref using="System"/>
+    <ref using="System.IO"/>
+		<ref using="System.Collections.Generic"/>
+	</dependencies> 
+	<class protectionLevel="private/public/internal" name="className">
+		<privateFields>
+			<item type="static/readonly/const/none" returnType="allTypes/void" value="">path</item>
+			<item type="static/readonly/const/none" returnType="allTypes/void" value="">path1</item>
+			<item type="static/readonly/const/none" returnType="allTypes/void" value="">path2</item>
+		</privateFields>
+		<encapsulate>true/false</encapsulate>
+		<publicFields>
+			<publicItem type="static/readonly/const/none" returnType="allTypes/void" value="">itemName</publicItem>
+      <publicItem type="static/readonly/const/none" returnType="allTypes/void" value="">itemName1</publicItem>
+      <publicItem type="static/readonly/const/none" returnType="allTypes/void" value="">itemName2</publicItem>
+		</publicFields>
+		<privateMethods>
+			<method type="static/virtual/abstract/none" returnType="allTypes/void">privateMethodName</method>
+		</privateMethods>
+		<publicMethods>
+			<publicMethod type="static/virtual/abstract/none" returnType="allTypes/void">publicMethodName</publicMethod>
+		</publicMethods>
+	</class>
+</nameSpace>
