@@ -1,0 +1,6 @@
+﻿namespace XMLParser
+{
+    class ConstuctorGenerator
+    {
+    }
+}
