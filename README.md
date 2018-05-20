@@ -7,7 +7,8 @@ This is a testing project, I'm trying to create a __fully - automated__ parser f
 working C# code.
 
 An example picture of the __*Example.sashs*__ file:  
-![example](https://user-images.githubusercontent.com/26832131/40266916-9b52e760-5b5c-11e8-927f-4e35234c3803.png)  
+![example](https://user-images.githubusercontent.com/26832131/40278947-54baed1a-5c43-11e8-981f-35a4e77199a1.png)  
+
 
 ### But how to use it?  
 
@@ -73,7 +74,7 @@ __The node name__ must be non-empty as well, it's field's name as well.
 __*constructor*__ -> Represents the creation of a constructor.  
 ###### Parameters:  
 param = "" -> In this case, the given constructor will have __only one__ __*argument*__.   
-params = "{param1, param2}" -> The given constructor can handle multiple parameters.  
+params = "{param1, param2}" -> The given constructor can handle multiple __*arguments*__.  
 
 ### The value="" argument   
 This is (maybe) the most important argument of the given node. It may be optional, as well as required.
