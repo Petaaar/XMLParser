@@ -70,6 +70,11 @@ type="" -> __*Optional*__ paramerer. Determines if the __method__ is __static__,
 returnType="" -> __*Required*__ parameter. If is empty or does not exists the __method__ __*won't be created*__. You will get error comment instead.   
 __The node name__ must be non-empty as well, it's field's name as well.  
 
+__*constructor*__ -> Represents the creation of a constructor.  
+###### Parameters:  
+param = "" -> In this case, the given constructor will have __only one__ __*argument*__.   
+params = "{param1, param2}" -> The given constructor can handle multiple parameters.  
+
 ### The value="" argument   
 This is (maybe) the most important argument of the given node. It may be optional, as well as required.
 
