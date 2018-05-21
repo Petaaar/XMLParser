@@ -5,17 +5,17 @@
 		<ref using="System.IO"/>
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
-	<class protectionLevel="public" type="static" name="MyClass">
+	<class protectionLevel="public" type="abstract" name="MyClass">
 		<privateFields>
-			<item type="static" returnType="string">path</item>
+			<item type="static" returnType="string" value="HELLOO">path</item>
 			<item returnType="int">myNumber</item>
-			<item type="const" returnType="string">TAB</item>
+			<item type="const" returnType="string" value="    ">TAB</item>
 		</privateFields>
 		<encapsulate>true</encapsulate>
 		<publicFields>
-			<publicItem type="static" returnType="string">publicField</publicItem>
-      <publicItem type="readonly" returnType="int">intField</publicItem>
-      <publicItem returnType="double">sixAndAHalf</publicItem>
+      <publicItem type="readonly" returnType="int" value="5">intField</publicItem>
+      <publicItem returnType="double" value="6.5">sixAndAHalf</publicItem>
+      <publicItem type="static" returnType="bool" value="true">isItTrue</publicItem>
 		</publicFields>
 		<privateMethods>
 			<method type="virtual" returnType="bool">IsItTrue</method>
@@ -24,5 +24,9 @@
 			<publicMethod type="override" returnType="string">ToString</publicMethod>
       <publicMethod returnType="void">VoidMethod</publicMethod>
 		</publicMethods>
+    <constructor param="string parameter"/>
+    <constructor protectionLevel="protected" param="int param"/>
+    <constructor params="{int param1, uint param2}"/>
+    <constructor protectionLevel="protected" param="{uint param1, string param2}"/>
 	</class>
 </nameSpace>
