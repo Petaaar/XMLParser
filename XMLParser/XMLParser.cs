@@ -47,7 +47,7 @@ namespace XMLParser
         /// </summary>
         /// <param name="parameters">Parameters.</param>
         /// <returns><see cref="System.Collections.Generic.List{T}"/></returns>
-        public System.Collections.Generic.List<string> GetConstructorParameters(string parameters)
+        public static System.Collections.Generic.List<string> GetConstructorParameters(string parameters)
         {
             var paramsArr = parameters.Split(new char[] { '{', '}', ',' },StringSplitOptions.None);
             var returnList = new System.Collections.Generic.List<string>();
@@ -63,7 +63,13 @@ namespace XMLParser
 
             return returnList;
         }
-        
+       
+        public static string SetPathForCreatingFile()
+            => @"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs";
+
+        public static string SetPathForCreatingFile(string path)
+            => path;
+
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
         /// </summary>
@@ -180,7 +186,22 @@ namespace XMLParser
         #endregion Private
 
         #region Public
-        public static void Main() => new XMLParser();
+        public static void Main()
+        {
+            var start = DateTime.Now.Millisecond;
+            SetPathForCreatingFile();
+            new XMLParser();
+            var end = DateTime.Now.Millisecond;
+            var lifeSpan = end - start;
+            Console.ForegroundColor = ConsoleColor.Green;
+            var message = "The program was completed successfully in ";
+            if (lifeSpan < 0) message += (1000 - (lifeSpan * -1) + 1);
+            else message += lifeSpan + 1;
+            message += " milliseconds!";
+            Console.WriteLine(message);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Environment.Exit(0);
+        }
 
         public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\Propper.sashs") { }
         

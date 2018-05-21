@@ -3,7 +3,7 @@
     sealed class ClassWtriter
     {
 
-        private const string pathTo = @"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs";
+        private readonly static string pathTo = XMLParser.SetPathForCreatingFile();
 
         private const string tabulation = "    ";
 
