@@ -40,7 +40,26 @@ namespace XMLParser
 
         private static string classType;
 
+        private static string className;
+
         public static string ClassType;
+
+        public System.Collections.Generic.List<string> GetConstructorParameters(string parameters)
+        {
+            var paramsArr = parameters.Split(new char[] { '{', '}', ',' },StringSplitOptions.None);
+            var returnList = new System.Collections.Generic.List<string>();
+
+            foreach (var item in paramsArr)
+            {
+                if (item.StartsWith("{"))
+                    returnList.Add(item.Remove(0, 1));
+                if (item.EndsWith("}"))
+                    returnList.Add(item.Remove(item.Length - 1, 1));
+                else returnList.Add(item);
+            }
+
+            return returnList;
+        }
         
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
@@ -76,7 +95,7 @@ namespace XMLParser
             if (node.Name == "class" && node.Attributes["type"] != null) classType = node.Attributes["type"].Value;
 
             #region Item
-            if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
+                if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null
                     & node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value,
@@ -128,6 +147,21 @@ namespace XMLParser
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicMethod
 
+            #region Constructor/s
+
+            if (node.Name == "constructor")
+                if (node.Attributes != null && node.Attributes["protectionLevel"] != null && node.Attributes["param"] != null)
+                    return new ConstuctorGenerator(node.Attributes["protectionLevel"].Value, node.Attributes["param"].Value).Parse();
+                else if (node.Attributes != null && node.Attributes["protectionLevel"] == null && node.Attributes["param"] != null)
+                    return new ConstuctorGenerator(node.Attributes["param"].Value).Parse();
+                else if (node.Attributes != null && node.Attributes["protectionLevel"] != null && node.Attributes["params"] != null)
+                    return new ConstuctorGenerator(node.Attributes["protectionLevel"].Value,
+                        GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+                else if (node.Attributes != null && node.Attributes["protectionLevel"] == null && node.Attributes["params"] != null)
+                    return new ConstuctorGenerator(GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+
+            #endregion Constructor/s
+                        
             return string.Empty;
         }
 
