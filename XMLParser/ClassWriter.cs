@@ -22,6 +22,13 @@
         /// </summary>
         private static System.Collections.Generic.List<string> fullClass = new System.Collections.Generic.List<string>();
 
+        private static void Error(string message)
+        {
+            System.Console.ForegroundColor = System.ConsoleColor.Red;
+            System.Console.WriteLine(message);
+            System.Console.ForegroundColor = System.ConsoleColor.Gray;
+        }
+
         /// <summary>
         /// Implementation of <see cref="IParser"/>. Basically runs the class.
         /// </summary>
@@ -126,7 +133,16 @@
         public static void CheckDir(string path)
         {
             if (!System.IO.File.Exists(path))
-                System.IO.File.Create(path);
+            {
+                System.IO.FileStream file;
+                try
+                {
+                    file = System.IO.File.Create(path);
+                    file.Close(); 
+                }
+                catch (System.IO.DirectoryNotFoundException) { Error("Please, specify a filename within the path!"); System.Environment.Exit(1); }
+                catch (System.UnauthorizedAccessException) { Error("Could not access the given path!");  System.Environment.Exit(1); }
+            }      
         }
 
         /// <summary>

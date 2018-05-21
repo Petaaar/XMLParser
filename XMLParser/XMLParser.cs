@@ -63,12 +63,14 @@ namespace XMLParser
 
             return returnList;
         }
-       
-        public static string SetPathForCreatingFile()
-            => @"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs";
 
-        public static string SetPathForCreatingFile(string path)
-            => path;
+        public static string SetPathForCreatingFile()
+        {
+            var path = Console.ReadLine();
+            if (path == "boot") //just for me, MUST BE DELETED AFTER RELEASE!
+                return @"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs";
+            return path;
+        }
 
         /// <summary>
         /// Searches a given <see cref="XmlNode"/> and checks it's attributes.
@@ -189,7 +191,6 @@ namespace XMLParser
         public static void Main()
         {
             var start = DateTime.Now.Millisecond;
-            SetPathForCreatingFile();
             new XMLParser();
             var end = DateTime.Now.Millisecond;
             var lifeSpan = end - start;
