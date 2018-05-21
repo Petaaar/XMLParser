@@ -10,7 +10,6 @@ namespace SASH.Custom
 
 
     public abstract class MyClass
-
     {
         private static string path = "HELLOO";
 
@@ -24,17 +23,37 @@ namespace SASH.Custom
 
         public static bool isItTrue = true;
 
-        private bool IsItTrue()
+        private virtual bool IsItTrue()
         {
 
         }
 
-        public string ToString()
+        public override string ToString()
         {
 
         }
 
         public void VoidMethod()
+        {
+
+        }
+
+        public MyClass(string parameter)
+        {
+
+        }
+
+        protected MyClass(int param)
+        {
+
+        }
+
+        public MyClass(int param1, uint param2)
+        {
+
+        }
+
+        protected MyClass(uint param1, string param2)
         {
 
         }
