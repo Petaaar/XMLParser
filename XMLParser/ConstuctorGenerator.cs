@@ -35,6 +35,10 @@
             this.isList = true;
         }
         
+        /// <summary>
+        /// Implements <see cref="IParser"/>. Generates the constructor.
+        /// </summary>
+        /// <returns>A new constructor for the class as string.</returns>
         public string Parse()
         {
             var output = string.Empty;
@@ -73,9 +77,7 @@
 
             output = builder.ToString();
             builder.Clear();
-
-            System.Console.WriteLine();
-
+            
             return $"        CTOR{output}";
         }   
     }

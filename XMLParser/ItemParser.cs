@@ -58,6 +58,10 @@
             else protectionLevel = "public";
         }
 
+        /// <summary>
+        /// Implements the <see cref="IParser"/>. Creates the  current field.
+        /// </summary>
+        /// <returns>New field as string.</returns>
         public string Parse()
         {
             char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
@@ -79,7 +83,7 @@
                 return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
             if (value == null)
                 return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
-            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = \"{value}\"";
+            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
         }
     }
 }

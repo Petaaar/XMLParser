@@ -14,9 +14,7 @@
         private static uint refferenceCount;
 
         private static uint refferenceIteration;
-
-        private static System.Collections.Generic.List<string> privateFields;
-
+        
         private static string classType = XMLParser.ClassType;
 
         /// <summary>
@@ -24,6 +22,10 @@
         /// </summary>
         private static System.Collections.Generic.List<string> fullClass = new System.Collections.Generic.List<string>();
 
+        /// <summary>
+        /// Implementation of <see cref="IParser"/>. Basically runs the class.
+        /// </summary>
+        /// <param name="item">Item to be parsed.</param>
         public static void Parse(string item)
         {
             if (item is string && item.Length != 0)
@@ -34,6 +36,10 @@
             else System.Console.WriteLine("ERROR!");
         }
 
+        /// <summary>
+        /// Writes a given <paramref name="fileContent"/> into a file.
+        /// </summary>
+        /// <param name="fileContent">The content to be written.</param>
         private static void WriteFile(System.Collections.Generic.List<string> fileContent)
         {
             refferenceIteration = 0;
@@ -64,7 +70,7 @@
                     }
                     else if (item.EndsWith(tabulation + "{") && !item.EndsWith(tabulation + "}}")) // class <NAME> \n {
                     {
-                        writer.WriteLine(item.Remove(item.Length - 5, 5));
+                        writer.Write(item.Remove(item.Length - 5, 5));
                         writer.WriteLine(tabulation + "{");
                     }
                     else if (item.EndsWith("}\n}")) //}\n} -> } }
@@ -80,21 +86,30 @@
                         writer.WriteLine(doubleTab + '}');
                         writer.WriteLine();
                     }
-
                     else writer.WriteLine(item);
                 }
             }
         }
 
+        /// <summary>
+        /// Checks and sets the encapsulation of the private nodes.
+        /// </summary>
+        /// <param name="TrueFalse"></param>
         public static void SetEncapsulation(string TrueFalse)
         {
             if (TrueFalse == "true")
                 encapsulate = true;
         }
-
+        /// <summary>
+        /// The count of the assembly references used.
+        /// </summary>
+        /// <param name="count"></param>
         public static void SetRefferenceCount(uint count) => refferenceCount = count;
 
-
+        /// <summary>
+        /// Saves the current item into the fullClass list.
+        /// </summary>
+        /// <param name="item">Current item.</param>
         public static void SaveFileContent(string item)
         {
             CheckDir(pathTo);
@@ -104,6 +119,10 @@
             fullClass.Add(item);
         }
 
+        /// <summary>
+        /// Checks if the new file exists or not. If not - creates it.
+        /// </summary>
+        /// <param name="path"></param>
         public static void CheckDir(string path)
         {
             if (!System.IO.File.Exists(path))
@@ -131,8 +150,6 @@
                     return $"{item.Remove(4, 1)}\n";
                 return $"{item.Remove(4,1)}";
             }
-
-            privateFields = new System.Collections.Generic.List<string>();
 
             if (item.StartsWith($"{tabulation}C")) //class checking
             {
@@ -168,6 +185,8 @@
                     return Class(props[0], props[1], props[2]);
             }
 
+
+            #region Field and method checking
             if (item.StartsWith($"{doubleTab}N") && !item.StartsWith($"{doubleTab}NM")) //private field
                 return item.Remove(8, 1) + ';' + "\n";
 
@@ -185,6 +204,15 @@
 
             else if (item.StartsWith($"{doubleTab}PM") && classType != "abstract") //public method
                 return item.Remove(8, 2) + "\n{\n}\n";
+
+            #endregion Field and method checking
+
+            #region Constructors checking
+
+            if (item.StartsWith($"{doubleTab}CTOR"))
+                return item.Remove(8, 4) + "\n{\n}\n";
+
+            #endregion Constructors checking
 
             return item;
         }

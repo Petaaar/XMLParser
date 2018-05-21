@@ -52,9 +52,15 @@
             else this.protectionLevel = "public";
         }
 
+        /// <summary>
+        /// Implements the <see cref="IParser"/>. Creates the  current method.
+        /// </summary>
+        /// <returns>New method as string.</returns>
         public string Parse()
         {
             char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
+
+            //the method contains N in itself if it's private..
 
             if (type == null) //no type
                 if (classType == null || classType == "abstract")

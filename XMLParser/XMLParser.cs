@@ -40,10 +40,13 @@ namespace XMLParser
 
         private static string classType;
 
-        private static string className;
-
         public static string ClassType;
 
+        /// <summary>
+        /// Separates the constructor parameters.
+        /// </summary>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns><see cref="System.Collections.Generic.List{T}"/></returns>
         public System.Collections.Generic.List<string> GetConstructorParameters(string parameters)
         {
             var paramsArr = parameters.Split(new char[] { '{', '}', ',' },StringSplitOptions.None);
@@ -165,6 +168,9 @@ namespace XMLParser
             return string.Empty;
         }
 
+        /// <summary>
+        /// Essentially calls the <see cref="ClassWtriter"/> class and writes the content in the file.
+        /// </summary>
         private void TraceContent()
         {
             ClassWtriter.SetRefferenceCount((uint)refferences);
@@ -213,7 +219,7 @@ namespace XMLParser
 
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
 
-            xmlContent.Add(tab+"}\n}"); //add the closing braces ;)
+            xmlContent.Add(tab+"}\n}"); //add the finishing 2 closing braces ;)
             TraceContent();
         }
 

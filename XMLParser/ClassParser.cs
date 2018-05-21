@@ -9,7 +9,7 @@
 
         private string protectionLevel;
         private string type;
-        private string className; 
+        private static string className;
 
         #endregion Private
 
@@ -48,12 +48,8 @@
 
         public string ClassName
         {
-            get
-            {
-                if (className != null)
-                    return className;
-                return string.Empty;
-            }
+            get => className; 
+
             private set
             {
                 if (value != null && value != string.Empty)
@@ -61,23 +57,29 @@
             }
         }
 
-        public ClassParser() : this(null,null,null) { } //for no arguments given
-
+        public ClassParser() : this(className) { }
+        
         public ClassParser(string className) : this(null,null,className) { } //for only one argument given
 
         public ClassParser(string protectionLevel, string className) : this(protectionLevel, null, className) { }
         
         public ClassParser(string type, int placeholder, string className) : this(null,type,className) { }
 
-        public ClassParser(string protectionLevel, string type, string className)
+        public ClassParser(string protectionLevel, string type, string className2)
         {
             this.protectionLevel = protectionLevel;
             this.type = type;
-            this.className = className;
+            if (className2 != null && className2 != string.Empty)
+            {
+                className = className2;
+                System.Console.WriteLine(className2);
+            }
+            if (className == null) System.Console.WriteLine("NULL");
+            if (className == string.Empty) System.Console.WriteLine("EMPTY");
         }
 
         public string Parse()
-        { 
+        {
             if (type == null && protectionLevel != null) //has only protection level
                 return $"C{this.protectionLevel} {className}";
             if (type == null && protectionLevel == null) //has only name
