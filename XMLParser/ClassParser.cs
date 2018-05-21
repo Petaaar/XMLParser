@@ -72,7 +72,6 @@
             if (className2 != null && className2 != string.Empty)
             {
                 className = className2;
-                System.Console.WriteLine(className2);
             }
             if (className == null) System.Console.WriteLine("NULL");
             if (className == string.Empty) System.Console.WriteLine("EMPTY");

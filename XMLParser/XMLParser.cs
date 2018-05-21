@@ -182,7 +182,7 @@ namespace XMLParser
         #region Public
         public static void Main() => new XMLParser();
 
-        public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Propper.sashs") { }
+        public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\Propper.sashs") { }
         
         public XMLParser(string path)
         {

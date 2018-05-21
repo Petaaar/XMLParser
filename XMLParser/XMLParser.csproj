@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassParser.cs" />
+    <Compile Include="ClassWriter.cs" />
+    <Compile Include="ConstuctorGenerator.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="ItemParser.cs" />
     <Compile Include="MethodParser.cs" />
@@ -51,6 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Testing\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
