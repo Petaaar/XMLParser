@@ -2,7 +2,7 @@
 {
     sealed class ClassWtriter
     {
-
+        #region Private
         private readonly static string pathTo = XMLParser.SetPathForCreatingFile();
 
         private const string tabulation = "    ";
@@ -29,19 +29,7 @@
             System.Console.ForegroundColor = System.ConsoleColor.Gray;
         }
 
-        /// <summary>
-        /// Implementation of <see cref="IParser"/>. Basically runs the class.
-        /// </summary>
-        /// <param name="item">Item to be parsed.</param>
-        public static void Parse(string item)
-        {
-            if (item is string && item.Length != 0)
-            {
-                SaveFileContent(item);
-                WriteFile(fullClass);
-            }
-            else System.Console.WriteLine("ERROR!");
-        }
+        
 
         /// <summary>
         /// Writes a given <paramref name="fileContent"/> into a file.
@@ -97,6 +85,9 @@
                 }
             }
         }
+        #endregion Private
+
+        #region Public
 
         /// <summary>
         /// Checks and sets the encapsulation of the private nodes.
@@ -270,5 +261,21 @@
         
 
         #endregion Checkers
+
+        /// <summary>
+        /// Implementation of <see cref="IParser"/>. Basically runs the class.
+        /// </summary>
+        /// <param name="item">Item to be parsed.</param>
+        public static void Parse(string item)
+        {
+            if (item is string && item.Length != 0)
+            {
+                SaveFileContent(item);
+                WriteFile(fullClass);
+            }
+            else System.Console.WriteLine("ERROR!");
+        }
+
+        #endregion Public
     }
 }
