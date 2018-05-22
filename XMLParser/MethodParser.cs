@@ -16,6 +16,12 @@
 
         private readonly string protectionLevel;
 
+        private readonly string argument;
+
+        private readonly System.Collections.Generic.List<string> argumentsList;
+
+        private readonly bool isList;
+
         private string classType = XMLParser.ClassType;
         #endregion Private
 
@@ -31,21 +37,38 @@
         public string ProtectionLevel => protectionLevel;
         #endregion Encapsulation
 
-        public MethodParser() : this(null,null,null,true) { }
+        public MethodParser() : this(null,null,null,true, null) { }
 
-        public MethodParser(string returnType, string name, bool isPrivate) : this(null,returnType,name,isPrivate) { }
+        public MethodParser(string returnType, string name, bool isPrivate) : this(null,returnType,name,isPrivate, null) { }
 
-        public MethodParser(string returnType, string name) : this(null, returnType, name, true) { }
+        public MethodParser(string returnType, string name) : this(null, returnType, name, true, null) { }
 
-        public MethodParser(string type, string returnType, string name) : this(type, returnType, name, true) { }
+        public MethodParser(string type, string returnType, string name) : this(type, returnType, name, true, null) { }
 
         /// <param name="isPrivate">Determines if the given method is private. TRUE by default.</param>
-        public MethodParser(string type, string returnType, string name, bool isPrivate)
+        public MethodParser(string type, string returnType, string name, bool isPrivate, int placeholder, string argument)
         {
             this.type = type;
             this.returnType = returnType;
             this.name = name;
             this.isPrivate = isPrivate;
+            this.argument = argument;
+
+
+            if (this.isPrivate)
+                this.protectionLevel = "private";
+            else this.protectionLevel = "public";
+        }
+
+        public MethodParser(string type, string returnType, string name, bool isPrivate, System.Collections.Generic.List<string> argumentsList)
+        {
+
+            this.type = type;
+            this.returnType = returnType;
+            this.name = name;
+            this.isPrivate = isPrivate;
+            this.argumentsList = argumentsList;
+
 
             if (this.isPrivate)
                 this.protectionLevel = "private";
@@ -58,14 +81,40 @@
         /// <returns>New method as string.</returns>
         public string Parse()
         {
-            char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
-
             //the method contains N in itself if it's private..
+            char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
+            
+            if (argument == null && argumentsList == null)
+            {
+                if (type == null) //no type
+                    if (classType == null || classType == "abstract")
+                        return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+                    else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+            }
+            
+            else if (argument != null && argumentsList == null) //we have only one argument
+            {
+                if (type == null) //no type
+                    return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({argument})";
+                else return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({argument})";
+            }
 
-            if (type == null) //no type
-                if (classType == null || classType == "abstract")
-                    return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
-                else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+            else if (argument == null && argumentsList != null)
+            {
+                var builder = new System.Text.StringBuilder();
+
+                foreach (var listItem in argumentsList)
+                    if (listItem != null && listItem != string.Empty)
+                        if (listItem != argumentsList[argumentsList.Count - 2])
+                            builder.Append(listItem + ',');
+                        else builder.Append(listItem);
+
+
+                if (type != null)
+                    return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({builder.ToString()})";
+                return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({builder.ToString()})";
+            }
+
             return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}()";
         }
     }

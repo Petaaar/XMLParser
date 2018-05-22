@@ -77,7 +77,7 @@
                     {
                         writer.WriteLine(item.Remove(item.Length - 5, 5));
                         writer.WriteLine(doubleTab + '{');
-                        writer.WriteLine();
+                        writer.WriteLine($"{doubleTab}//Write your code here!");
                         writer.WriteLine(doubleTab + '}');
                         writer.WriteLine();
                     }

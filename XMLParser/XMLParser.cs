@@ -58,6 +58,8 @@ namespace XMLParser
                     returnList.Add(item.Remove(0, 1));
                 if (item.EndsWith("}"))
                     returnList.Add(item.Remove(item.Length - 1, 1));
+                if (item.EndsWith(","))
+                    returnList.Add(item.Remove(item.Length - 1, 1) + ", ");
                 else returnList.Add(item);
             }
 
@@ -106,7 +108,7 @@ namespace XMLParser
             if (node.Name == "class" && node.Attributes["type"] != null) classType = node.Attributes["type"].Value;
 
             #region Item
-                if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
+            if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null
                     & node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value,
@@ -134,28 +136,88 @@ namespace XMLParser
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null &&
                     node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText, false).Parse();
-                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && 
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
                     node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicItem
+            
 
             #region Method
             if (node.Name == "method" && !this.noPrivateMethods)
-                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
+                #region No arguments
+                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] == null && node.InnerText != null) //HAS NO PARAMETERS
                     return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText).Parse();
-                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] == null && node.InnerText != null) //HAS NO PARAMETERS!
                     return new MethodParser(node.Attributes["returnType"].Value, node.InnerText).Parse();
-                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+                #endregion No arguments
+
+                #region Single argument
+                else if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] != null
+                    && node.Attributes["params"] == null && node.InnerText != null) //have ONE parameter and type!
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, true,
+                        0, node.Attributes["param"].Value).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] != null
+                    && node.Attributes["params"] == null && node.InnerText != null) //have ONE parameter and NO type!
+                    return new MethodParser(null, node.Attributes["returnType"].Value, node.InnerText, true, 0, node.Attributes["param"].Value).Parse();
+                #endregion Single argument
+
+                #region Many Arguments
+                else if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] != null && node.InnerText != null) //have MANY parameters and type!
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, true,
+                        GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] != null && node.InnerText != null) //have MANY parameters and NO type!
+                    return new MethodParser(null,node.Attributes["returnType"].Value, node.InnerText, true,
+                        GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+
+                #endregion Many Arguments
+
+            else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+
             #endregion Method
 
             #region PublicMethod
+
+            
             if (node.Name == "publicMethod" && !this.noPublicMethods)
-                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.InnerText != null)
-                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false).Parse();
-                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.InnerText != null)
+                #region No arguments
+                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] == null && node.InnerText != null)
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false,0, null).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] == null && node.InnerText != null)
                     return new MethodParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
+                
+                #endregion No arguments
+
+                #region Single argument
+                else if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] != null
+                    && node.Attributes["params"] == null && node.InnerText != null) //have ONE parameter and type!
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false,
+                        0, node.Attributes["param"].Value).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] != null
+                    && node.Attributes["params"] == null && node.InnerText != null) //have ONE parameter and NO type!
+                    return new MethodParser(null, node.Attributes["returnType"].Value, node.InnerText, false, 0, node.Attributes["param"].Value).Parse();
+                #endregion Single argument
+
+                #region Many Arguments
+                else if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] != null && node.InnerText != null) //have MANY parameters and type!
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false,
+                        GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
+                    && node.Attributes["params"] != null && node.InnerText != null) //have MANY parameters and NO type!
+                    return new MethodParser(null, node.Attributes["returnType"].Value, node.InnerText, false,
+                        GetConstructorParameters(node.Attributes["params"].Value)).Parse();
+
+                    #endregion Many Arguments
+
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+
             #endregion PublicMethod
 
             #region Constructor/s

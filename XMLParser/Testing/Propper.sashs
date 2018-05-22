@@ -18,11 +18,16 @@
       <publicItem type="static" returnType="bool" value="true">isItTrue</publicItem>
 		</publicFields>
 		<privateMethods>
-			<method type="virtual" returnType="bool">IsItTrue</method>
+			<method type="virtual" returnType="bool" param="bool testArgument">IsItTrue</method>
+      <method returnType="void" param="FileStream fileStream">MyMethod</method>
+      <method type="static" returnType="void" params="{uint num1, File file}">MultiParams</method>
+      <method returnType="int" params="{int a, int b}">Add</method>
 		</privateMethods>
 		<publicMethods>
 			<publicMethod type="override" returnType="string">ToString</publicMethod>
       <publicMethod returnType="void">VoidMethod</publicMethod>
+      <publicMethod type="static" returnType="void" param="int testArgument">TestWParam</publicMethod>
+      <publicMethod returnType="double" params="{double one, double two}">PARAMS</publicMethod>
 		</publicMethods>
     <constructor param="string parameter"/>
     <constructor protectionLevel="protected" param="int param"/>
