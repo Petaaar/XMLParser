@@ -7,7 +7,7 @@ This is a testing project, I'm trying to create a __fully - automated__ parser f
 working C# code.
 
 An example picture of the __*Example.sashs*__ file:  
-![example](https://user-images.githubusercontent.com/26832131/40278947-54baed1a-5c43-11e8-981f-35a4e77199a1.png)  
+![example](https://user-images.githubusercontent.com/26832131/40419350-c1cd09b4-5e8d-11e8-921f-1db2c7d715c3.png)  
 
 
 ### But how to use it?  
@@ -61,14 +61,19 @@ __*method*__ -> Represents a __private method__ of the class.
 ###### Parameters:  
 type="" -> __*Optional*__ paramerer. Determines if the __method__ is __static__, __virtual__, __abstract__ or has no specified type.  
 returnType="" -> __*Required*__ parameter. If is empty or does not exists the __method__ __*won't be created*__. You will get error comment instead.  
+param="" -> __*Optional*__ parameter. Adds a single argument to the current __private method__.  
+params="{__firstParam__,__secondParam__,[...]}" -> __*Optional*__ parameter. Adds the given in curly braces, comma-separated attributes as arguments to the current __private method__.  
 __The node name__ must be non-empty as well, it's field's name as well.  
 
-__*privateMethods*__ -> Represents a list of all __private methods__ of the class. Has no parameters.  
+__*publicMethods*__ -> Represents a list of all __public methods__ of the class. Has no parameters.  
 
 __*publicMethod*__ -> Represents a __public method__ of the class.  
 ###### Parameters:    
 type="" -> __*Optional*__ paramerer. Determines if the __method__ is __static__, __virtual__, __abstract__ or has no specified type.  
 returnType="" -> __*Required*__ parameter. If is empty or does not exists the __method__ __*won't be created*__. You will get error comment instead.   
+param="" -> __*Optional*__ parameter. Adds a single argument to the current __public method__.  
+params="{__firstParam__,__secondParam__,[...]}" -> __*Optional*__ parameter. Adds the given in curvy braces, comma-separated attributes as
+arguments to the current __public method__.  
 __The node name__ must be non-empty as well, it's field's name as well.  
 
 __*constructor*__ -> Represents the creation of a constructor.  
