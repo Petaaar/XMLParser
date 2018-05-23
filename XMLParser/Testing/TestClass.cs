@@ -2,7 +2,7 @@
 Author: Petar Angelov (Petaaar). GitHub: https://github.com/Petaaar.
 The project source code: https://github.com/Petaaar/XMLParser.
 Thanks for using my parser!*/
-namespace SASH.Custom
+namespace MyNamespace
 {
     using System;
     using System.IO;
@@ -23,39 +23,74 @@ namespace SASH.Custom
 
         public static bool isItTrue = true;
 
-        private virtual bool IsItTrue()
+        private void MyPrivateMethod()
         {
+        //Write your code here!
+        }
 
+        private virtual bool IsItTrue(bool testArgument)
+        {
+        //Write your code here!
+        }
+
+        private void MyMethod(FileStream fileStream)
+        {
+        //Write your code here!
+        }
+
+        private static void MultiParams(uint num1, File file)
+        {
+        //Write your code here!
+        }
+
+        private int Add(int a, int b)
+        {
+        //Write your code here!
         }
 
         public override string ToString()
         {
-
+        //Write your code here!
         }
 
         public void VoidMethod()
         {
+        //Write your code here!
+        }
 
+        public static void TestWParam(int testArgument)
+        {
+        //Write your code here!
+        }
+
+        public double PARAMS(double one, double two)
+        {
+        //Write your code here!
+        }
+
+        public MyClass()
+        {
+        //Write your code here!
         }
 
         public MyClass(string parameter)
         {
-
+        //Write your code here!
         }
 
         protected MyClass(int param)
         {
-
+        //Write your code here!
         }
 
         public MyClass(int param1, uint param2)
         {
-
+        //Write your code here!
         }
 
         protected MyClass(uint param1, string param2)
         {
-
+        //Write your code here!
         }
 
     }

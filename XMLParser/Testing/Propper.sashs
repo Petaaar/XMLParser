@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?><!--An example ".sashs" file to parse. Written by Petar Angelov - Petaaar(17.05.2018)-->
-<nameSpace name="SASH.Custom">
+<nameSpace name="MyNamespace">
 	<dependencies>
 		<ref using="System"/>
 		<ref using="System.IO"/>
@@ -11,13 +11,14 @@
 			<item returnType="int">myNumber</item>
 			<item type="const" returnType="string" value="    ">TAB</item>
 		</privateFields>
-		<encapsulate>true</encapsulate>
+		<encapsulate>false</encapsulate>
 		<publicFields>
       <publicItem type="readonly" returnType="int" value="5">intField</publicItem>
       <publicItem returnType="double" value="6.5">sixAndAHalf</publicItem>
       <publicItem type="static" returnType="bool" value="true">isItTrue</publicItem>
 		</publicFields>
 		<privateMethods>
+      <method returnType="void">MyPrivateMethod</method>
 			<method type="virtual" returnType="bool" param="bool testArgument">IsItTrue</method>
       <method returnType="void" param="FileStream fileStream">MyMethod</method>
       <method type="static" returnType="void" params="{uint num1, File file}">MultiParams</method>
@@ -29,6 +30,7 @@
       <publicMethod type="static" returnType="void" param="int testArgument">TestWParam</publicMethod>
       <publicMethod returnType="double" params="{double one, double two}">PARAMS</publicMethod>
 		</publicMethods>
+    <constructor param=""/>
     <constructor param="string parameter"/>
     <constructor protectionLevel="protected" param="int param"/>
     <constructor params="{int param1, uint param2}"/>
