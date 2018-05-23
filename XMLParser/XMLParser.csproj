@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Testing\Propper.sashs">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Testing\README.md" />
   </ItemGroup>
   <ItemGroup>

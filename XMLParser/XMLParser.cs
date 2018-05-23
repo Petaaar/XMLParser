@@ -142,7 +142,6 @@ namespace XMLParser
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             #endregion PublicItem
             
-
             #region Method
             if (node.Name == "method" && !this.noPrivateMethods)
                 #region No arguments
