@@ -48,33 +48,35 @@
                 protectionLevel = "public";
 
             builder.Append($"{protectionLevel} {className}(");
-
-            if (isList) //and has no protection level modifier
+            if (parameter != string.Empty)
             {
-                foreach (var listItem in parametersList)
+                if (isList) //and has no protection level modifier
                 {
-                    if (listItem != null && listItem != string.Empty)
-                        if (listItem != parametersList[parametersList.Count - 2])
-                            builder.Append(listItem + ',');
-                        else builder.Append(listItem);
+                    foreach (var listItem in parametersList)
+                    {
+                        if (listItem != null && listItem != string.Empty)
+                            if (listItem != parametersList[parametersList.Count - 2])
+                                builder.Append(listItem + ',');
+                            else builder.Append(listItem);
+                    }
+
+                    builder.Append(')');
                 }
+                else if (parameter[0] == '{' && parameter[parameter.Length - 1] == '}') //isList and has protection modifier
+                {
+                    string[] parameters = parameter.Split(new char[] { '{', ',', '}' }, System.StringSplitOptions.None);
 
-                builder.Append(')');
+                    for (int i = 0; i < parameters.Length; i++)
+                        if (parameters[i] != null && parameters[i] != string.Empty)
+                            if (parameters[i] != parameters[parameters.Length - 2]) //idk how this works, but won't gonna complain about it..
+                                builder.Append($"{parameters[i]},");
+                            else builder.Append(parameters[i]);
+
+                    builder.Append(')');
+                }
+                else builder.Append(parameter + ')');
             }
-            else if (parameter[0] == '{' && parameter[parameter.Length - 1] == '}') //isList and has protection modifier
-            {
-                string[] parameters = parameter.Split(new char[] { '{', ',', '}' }, System.StringSplitOptions.None);
-
-                for (int i = 0; i < parameters.Length; i++)
-                    if (parameters[i] != null && parameters[i] != string.Empty)
-                        if (parameters[i] != parameters[parameters.Length - 2]) //idk how this works, but won't gonna complain about it..
-                            builder.Append($"{parameters[i]},");
-                        else builder.Append(parameters[i]);
-
-                builder.Append(')');
-            }
-            else builder.Append(parameter + ')'); 
-
+            else builder.Append(parameter + ')');
             output = builder.ToString();
             builder.Clear();
             
