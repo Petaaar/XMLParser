@@ -4,24 +4,26 @@ The project source code: https://github.com/Petaaar/XMLParser.
 Thanks for using my parser!*/
 namespace MyNamespace
 {
+    #region Dependencies
     using System;
     using System.IO;
     using System.Collections.Generic;
 
+    #endregion Dependencies
 
+    ///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>
     public abstract class MyClass
     {
+        #region Private Fields
         private static string path = "HELLOO";
 
         private  int myNumber;
 
         private const string TAB = "    ";
 
-        public readonly int intField = 5;
+        #endregion Private Fields
 
         private  double sixAndAHalf = 6.5;
-
-        public static bool isItTrue = true;
 
         private void MyPrivateMethod()
         {

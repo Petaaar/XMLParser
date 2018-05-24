@@ -38,6 +38,10 @@ namespace XMLParser
 
         private static int refferences;
 
+        private static uint privateFieldsCount;
+
+        private static uint publicFieldsCount;
+
         private static string classType;
 
         public static string ClassType;
@@ -109,8 +113,10 @@ namespace XMLParser
 
             #region Item
             if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields
+            {
+                privateFieldsCount++;
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null
-                    & node.Attributes["value"] != null && node.InnerText != null)
+                   & node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value,
                         node.Attributes["value"].Value, node.InnerText).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
@@ -121,6 +127,7 @@ namespace XMLParser
                     return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
 
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+            }
             #endregion Item
 
             #region Encapsulation
@@ -133,6 +140,8 @@ namespace XMLParser
 
             #region PublicItem
             if (node.Name == "publicItem" && !this.noPublicFields)//parsing publicItems property
+            {
+                publicFieldsCount++;
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null &&
                     node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText, false).Parse();
@@ -140,6 +149,7 @@ namespace XMLParser
                     node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+            }
             #endregion PublicItem
             
             #region Method
@@ -243,6 +253,8 @@ namespace XMLParser
         private void TraceContent()
         {
             ClassWtriter.SetRefferenceCount((uint)refferences);
+            ClassWtriter.SetPrivateFieldsCount(privateFieldsCount);
+            ClassWtriter.SetPublicFieldsCount(publicFieldsCount);
             foreach (string item in xmlContent)
                 ClassWtriter.Parse(item);
         }
@@ -262,6 +274,8 @@ namespace XMLParser
             message += " milliseconds!";
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("PRIVATE fields:" + privateFieldsCount);
+            Console.WriteLine("PUBLIC fields:" + publicFieldsCount);
             Environment.Exit(0);
         }
 
