@@ -15,6 +15,7 @@ namespace MyNamespace
     public abstract class MyClass
     {
         #region Private Fields
+
         private static string path = "HELLOO";
 
         private  int myNumber;
@@ -23,52 +24,71 @@ namespace MyNamespace
 
         #endregion Private Fields
 
-        private  double sixAndAHalf = 6.5;
+        #region Public Fields
+
+        public readonly int intField = 5;
+
+        public  double sixAndAHalf = 6.5;
+
+        public static bool isItTrue = true;
+
+        public  bool ItIsNotTrue = false;
+
+        #endregion Public Fields
+
+        #region Private Methods
 
         private void MyPrivateMethod()
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         private virtual bool IsItTrue(bool testArgument)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         private void MyMethod(FileStream fileStream)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         private static void MultiParams(uint num1, File file)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         private int Add(int a, int b)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
+        #endregion Private Methods
+
+        #region Public Methods
+
         public override string ToString()
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         public void VoidMethod()
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         public static void TestWParam(int testArgument)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
 
         public double PARAMS(double one, double two)
-        {
-        //Write your code here!
+        { 
+        //Write your code here! 
         }
+
+        #endregion Public Methods
+
 
         public MyClass()
         {

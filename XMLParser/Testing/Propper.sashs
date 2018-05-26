@@ -16,6 +16,7 @@
       <publicItem type="readonly" returnType="int" value="5">intField</publicItem>
       <publicItem returnType="double" value="6.5">sixAndAHalf</publicItem>
       <publicItem type="static" returnType="bool" value="true">isItTrue</publicItem>
+      <publicItem returnType="bool" value="false">ItIsNotTrue</publicItem>
 		</publicFields>
 		<privateMethods>
       <method returnType="void">MyPrivateMethod</method>
