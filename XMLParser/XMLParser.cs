@@ -42,6 +42,10 @@ namespace XMLParser
 
         private static uint publicFieldsCount;
 
+        private static uint privateMethodsCount;
+
+        private static uint publicMethodsCount;
+
         private static string classType;
 
         public static string ClassType;
@@ -142,18 +146,25 @@ namespace XMLParser
             if (node.Name == "publicItem" && !this.noPublicFields)//parsing publicItems property
             {
                 publicFieldsCount++;
-                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null &&
-                    node.Attributes["value"] != null && node.InnerText != null)
-                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText, false).Parse();
+                if (node.Attributes["type"] != null && node.Attributes["returnType"] != null
+                   & node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value,
+                        node.Attributes["value"].Value, node.InnerText, false).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
-                    node.Attributes["value"] != null && node.InnerText != null)
-                    return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
+                        node.Attributes["value"] == null && node.InnerText != null)
+                    return new ItemParser(null,node.Attributes["returnType"].Value,null, node.InnerText, false).Parse();
+                else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
+                        node.Attributes["value"] != null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText,false).Parse();
+
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             }
             #endregion PublicItem
-            
+
             #region Method
             if (node.Name == "method" && !this.noPrivateMethods)
+            {
+                privateMethodsCount++;
                 #region No arguments
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
                     && node.Attributes["params"] == null && node.InnerText != null) //HAS NO PARAMETERS
@@ -180,27 +191,30 @@ namespace XMLParser
                         GetConstructorParameters(node.Attributes["params"].Value)).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
                     && node.Attributes["params"] != null && node.InnerText != null) //have MANY parameters and NO type!
-                    return new MethodParser(null,node.Attributes["returnType"].Value, node.InnerText, true,
+                    return new MethodParser(null, node.Attributes["returnType"].Value, node.InnerText, true,
                         GetConstructorParameters(node.Attributes["params"].Value)).Parse();
 
                 #endregion Many Arguments
 
-            else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+                else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
+            }
+            
 
             #endregion Method
 
             #region PublicMethod
 
-            
             if (node.Name == "publicMethod" && !this.noPublicMethods)
+            {
+                publicMethodsCount++;
                 #region No arguments
                 if (node.Attributes["type"] != null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
                     && node.Attributes["params"] == null && node.InnerText != null)
-                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false,0, null).Parse();
+                    return new MethodParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, false, 0, null).Parse();
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null && node.Attributes["param"] == null
                     && node.Attributes["params"] == null && node.InnerText != null)
                     return new MethodParser(node.Attributes["returnType"].Value, node.InnerText, false).Parse();
-                
+            
                 #endregion No arguments
 
                 #region Single argument
@@ -223,10 +237,10 @@ namespace XMLParser
                     return new MethodParser(null, node.Attributes["returnType"].Value, node.InnerText, false,
                         GetConstructorParameters(node.Attributes["params"].Value)).Parse();
 
-                    #endregion Many Arguments
+                #endregion Many Arguments
 
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
-
+            }
             #endregion PublicMethod
 
             #region Constructor/s
@@ -255,6 +269,8 @@ namespace XMLParser
             ClassWtriter.SetRefferenceCount((uint)refferences);
             ClassWtriter.SetPrivateFieldsCount(privateFieldsCount);
             ClassWtriter.SetPublicFieldsCount(publicFieldsCount);
+            ClassWtriter.SetPrivateMethodsCount(privateMethodsCount);
+            ClassWtriter.SetPublicMethodsCount(publicMethodsCount);
             foreach (string item in xmlContent)
                 ClassWtriter.Parse(item);
         }
@@ -274,8 +290,6 @@ namespace XMLParser
             message += " milliseconds!";
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("PRIVATE fields:" + privateFieldsCount);
-            Console.WriteLine("PUBLIC fields:" + publicFieldsCount);
             Environment.Exit(0);
         }
 

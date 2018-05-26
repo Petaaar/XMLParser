@@ -24,6 +24,14 @@
         private static uint publicFieldsCount;
 
         private static uint publicFieldsIteration;
+
+        private static uint privateMehtodsCount;
+
+        private static uint privateMethodsIteration;
+
+        private static uint publicMethodsCount;
+
+        private static uint publicMethodsIteration;
         
         private static string classType = XMLParser.ClassType;
 
@@ -52,6 +60,8 @@
             refferenceIteration = 0;
             privateFieldsIteration = 0;
             publicFieldsIteration = 0;
+            privateMethodsIteration = 0;
+            publicMethodsIteration = 0;
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(pathTo))
             {
@@ -86,22 +96,81 @@
                         writer.Write(item.Remove(item.Length - 5, 5));
                         writer.WriteLine(tabulation + "{");
                     }
-                    else if (item.StartsWith($"{doubleTab}N") || item.StartsWith($"{doubleTab}P")) //FIELDS
+                    else if (item.StartsWith($"{doubleTab}N") || item.StartsWith($"{doubleTab}P")) //FIELDS AND METHODS
                     {
-                        if (item.StartsWith($"{doubleTab}N")) //private fields
+                        if (!item.StartsWith($"{doubleTab}NM") && !item.StartsWith($"{doubleTab}PM")) //FIELDS
                         {
-                            privateFieldsIteration++;
-                            if (privateFieldsIteration == 1)
-                                writer.WriteLine($"{doubleTab}#region Private Fields");
-                            if (privateFieldsIteration == privateFieldsCount)
+                            if (item.StartsWith($"{doubleTab}N") && !item.StartsWith($"{doubleTab}P")) //private fields
                             {
-                                writer.WriteLine(item.Remove(8, 1));
-                                writer.WriteLine($"{doubleTab}#endregion Private Fields");
-                                writer.WriteLine();
+                                privateFieldsIteration++;
+                                if (privateFieldsIteration == 1)
+                                {
+                                    writer.WriteLine($"{doubleTab}#region Private Fields");
+                                    writer.WriteLine();
+                                }
+                                if (privateFieldsIteration == privateFieldsCount)
+                                {
+                                    writer.WriteLine(item.Remove(8, 1));
+                                    writer.WriteLine($"{doubleTab}#endregion Private Fields");
+                                    writer.WriteLine();
+                                }
+                                else writer.WriteLine(item.Remove(8, 1));
                             }
-                            else writer.WriteLine(item.Remove(8, 1));
+                            if (item.StartsWith($"{doubleTab}P") && !item.StartsWith($"{doubleTab}N")) //public fields
+                            {
+                                publicFieldsIteration++;
+                                if (publicFieldsIteration == 1)
+                                {
+                                    writer.WriteLine($"{doubleTab}#region Public Fields");
+                                    writer.WriteLine();
+                                }
+                                if (publicFieldsIteration == publicFieldsCount)
+                                {
+                                    writer.WriteLine(item.Remove(8, 1));
+                                    writer.WriteLine($"{doubleTab}#endregion Public Fields");
+                                    writer.WriteLine();
+                                }
+                                else writer.WriteLine(item.Remove(8, 1));
+                            }
                         }
-                        //TODO: PUBLIC FIELDS!
+                        else
+                        {
+                            if (item.StartsWith($"{doubleTab}NM") && !item.StartsWith($"{doubleTab}PM"))//private method
+                            {
+                                privateMethodsIteration++;
+
+                                if (privateMethodsIteration == 1)
+                                {
+                                    writer.WriteLine($"{doubleTab}#region Private Methods");
+                                    writer.WriteLine();
+                                }
+                                if (privateMethodsIteration == privateMehtodsCount)
+                                {
+                                    writer.WriteLine(item.Remove(8, 2));
+                                    writer.WriteLine($"{doubleTab}#endregion Private Methods");
+                                    writer.WriteLine();
+                                }
+                                else writer.WriteLine(item.Remove(8, 2));
+                            }
+                            if (item.StartsWith($"{doubleTab}PM") && !item.StartsWith($"{doubleTab}NM")) //public method
+                            {
+                                publicMethodsIteration++;
+
+                                if (publicMethodsIteration == 1)
+                                {
+                                    writer.WriteLine($"{doubleTab}#region Public Methods");
+                                    writer.WriteLine();
+                                }
+                                if (publicMethodsIteration == publicMethodsCount)
+                                {
+                                    writer.WriteLine(item.Remove(8, 2));
+                                    writer.WriteLine($"{doubleTab}#endregion Public Methods");
+                                    writer.WriteLine();
+                                    writer.WriteLine();
+                                }
+                                else writer.WriteLine(item.Remove(8, 2));
+                            }
+                        }
                     }
                     else if (item.EndsWith("}\n}")) //}\n} -> } }
                     {
@@ -152,6 +221,17 @@
         /// <param name="count"></param>
         public static void SetPublicFieldsCount(uint count) => publicFieldsCount = count;
 
+        /// <summary>
+        /// Sets the count of the private methods in the class
+        /// </summary>
+        /// <param name="count"></param>
+        public static void SetPrivateMethodsCount(uint count) => privateMehtodsCount = count;
+
+        /// <summary>
+        /// Sets the count if public methods in the class
+        /// </summary>
+        /// <param name="count"></param>
+        public static void SetPublicMethodsCount(uint count) => publicMethodsCount = count;
 
         /// <summary>
         /// Saves the current item into the fullClass list.
@@ -250,16 +330,16 @@
                 return item + ';' + "\n";
 
             else if (item.StartsWith($"{doubleTab}NM") && classType == "abstract") //private method
-                return item.Remove(8, 2) + ';' + "\n";
+                return item + ';' + "\n";
 
             else if (item.StartsWith($"{doubleTab}NM") && classType != "abstract") //private method
-                return item.Remove(8, 2) + "\n{\n}\n";
+                return item + "\n" + doubleTab + "{ \n"+ $"{doubleTab}//Write your code here! \n" + doubleTab + "}\n";
 
             else if (item.StartsWith($"{doubleTab}PM") && classType == "abstract") //public method
-                return item.Remove(8, 2) + ';' + "\n";
+                return item + ';' + "\n";
 
             else if (item.StartsWith($"{doubleTab}PM") && classType != "abstract") //public method
-                return item.Remove(8, 2) + "\n{\n}\n";
+                return item + "\n" + doubleTab + "{ \n"+$"{doubleTab}//Write your code here! \n" + doubleTab + "}\n";
 
             #endregion Field and method checking
 
