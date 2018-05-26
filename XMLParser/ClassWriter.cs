@@ -77,6 +77,7 @@
                         writer.WriteLine(item.Remove(item.Length - 2, 2));
                         writer.WriteLine("{");
                     }
+
                     else if (item.StartsWith($"{tabulation}using")) //using <ASSEMBLY_REFFERENCE>
                     {
                         refferenceIteration++;
@@ -96,6 +97,7 @@
                         writer.Write(item.Remove(item.Length - 5, 5));
                         writer.WriteLine(tabulation + "{");
                     }
+
                     else if (item.StartsWith($"{doubleTab}N") || item.StartsWith($"{doubleTab}P")) //FIELDS AND METHODS
                     {
                         if (!item.StartsWith($"{doubleTab}NM") && !item.StartsWith($"{doubleTab}PM")) //FIELDS
@@ -172,11 +174,13 @@
                             }
                         }
                     }
+
                     else if (item.EndsWith("}\n}")) //}\n} -> } }
                     {
                         writer.WriteLine(item.Remove(item.Length - 1, 1));
                         writer.WriteLine('}');
                     }
+
                     else if (item.EndsWith("\n{\n}\n"))
                     {
                         writer.WriteLine(item.Remove(item.Length - 5, 5));
@@ -185,6 +189,7 @@
                         writer.WriteLine(doubleTab + '}');
                         writer.WriteLine();
                     }
+
                     else writer.WriteLine(item);
                 }
             }

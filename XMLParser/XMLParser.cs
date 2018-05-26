@@ -277,6 +277,7 @@ namespace XMLParser
         #endregion Private
 
         #region Public
+
         public static void Main()
         {
             var start = DateTime.Now.Millisecond;
