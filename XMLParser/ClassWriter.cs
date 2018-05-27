@@ -132,9 +132,18 @@
                                     if (encapsulate && forEncapsulation != null)
                                     {
                                         writer.WriteLine($"{doubleTab}#region Encapsulated");
+                                        writer.WriteLine();
                                         foreach (string field in forEncapsulation)
-                                            writer.WriteLine(Encapsulator.Encapsulate(field));
+                                        {
+                                            var encapsulatedField = Encapsulator.Encapsulate(field);
+                                            if (encapsulatedField != string.Empty)
+                                            {
+                                                writer.WriteLine(encapsulatedField);
+                                                writer.WriteLine();
+                                            }
+                                        }
                                         writer.WriteLine($"{doubleTab}#endregion Encapsulated");
+                                        writer.WriteLine();
                                     }
                                 }
                                 else

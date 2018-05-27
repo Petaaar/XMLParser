@@ -12,17 +12,27 @@ namespace MyNamespace
     #endregion Dependencies
 
     ///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>
-    public abstract class MyClass
+    public sealed class MyClass
     {
         #region Private Fields
 
         private static string path = "HELLOO";
 
-        private  int myNumber;
+        private int myNumber;
+
+        private readonly uint item;
 
         private const string TAB = "    ";
 
         #endregion Private Fields
+
+        #region Encapsulated
+
+        public string Path { get => path; set => path = value; }
+
+        public string TAB { get => TAB; set => TAB = value; }
+
+        #endregion Encapsulated
 
         #region Public Fields
 
