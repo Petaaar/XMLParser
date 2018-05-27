@@ -1,5 +1,8 @@
 ﻿namespace XMLParser
 {
+    /// <summary>
+    /// This class creates the new, auto-generated class.
+    /// </summary>
     sealed class ClassWtriter
     {
         #region Private
@@ -40,6 +43,11 @@
         /// </summary>
         private static System.Collections.Generic.List<string> fullClass = new System.Collections.Generic.List<string>();
 
+        /// <summary>
+        /// A <see cref="System.Collections.Generic.List{T}"/> of PRIVATE FIELDS to be encapsulated.
+        /// </summary>
+        private static System.Collections.Generic.List<string> forEncapsulation;
+
         #endregion fields
 
         private static void Error(string message)
@@ -62,6 +70,8 @@
             publicFieldsIteration = 0;
             privateMethodsIteration = 0;
             publicMethodsIteration = 0;
+
+            forEncapsulation = encapsulate ? new System.Collections.Generic.List<string>() : null;
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(pathTo))
             {
@@ -100,8 +110,10 @@
 
                     else if (item.StartsWith($"{doubleTab}N") || item.StartsWith($"{doubleTab}P")) //FIELDS AND METHODS
                     {
+                        #region Sub - Fields
                         if (!item.StartsWith($"{doubleTab}NM") && !item.StartsWith($"{doubleTab}PM")) //FIELDS
                         {
+
                             if (item.StartsWith($"{doubleTab}N") && !item.StartsWith($"{doubleTab}P")) //private fields
                             {
                                 privateFieldsIteration++;
@@ -112,12 +124,27 @@
                                 }
                                 if (privateFieldsIteration == privateFieldsCount)
                                 {
+                                    if (forEncapsulation != null)
+                                        forEncapsulation.Add(item.Remove(8, 1));
                                     writer.WriteLine(item.Remove(8, 1));
                                     writer.WriteLine($"{doubleTab}#endregion Private Fields");
                                     writer.WriteLine();
+                                    if (encapsulate && forEncapsulation != null)
+                                    {
+                                        writer.WriteLine($"{doubleTab}#region Encapsulated");
+                                        foreach (string field in forEncapsulation)
+                                            writer.WriteLine(Encapsulator.Parse(field));
+                                        writer.WriteLine($"{doubleTab}#endregion Encapsulated");
+                                    }
                                 }
-                                else writer.WriteLine(item.Remove(8, 1));
+                                else
+                                {
+                                    if (forEncapsulation != null)
+                                        forEncapsulation.Add(item.Remove(8, 1));
+                                    writer.WriteLine(item.Remove(8, 1));
+                                }
                             }
+
                             if (item.StartsWith($"{doubleTab}P") && !item.StartsWith($"{doubleTab}N")) //public fields
                             {
                                 publicFieldsIteration++;
@@ -135,6 +162,8 @@
                                 else writer.WriteLine(item.Remove(8, 1));
                             }
                         }
+                        #endregion Sub- Fields
+                        #region Sub-Methods
                         else
                         {
                             if (item.StartsWith($"{doubleTab}NM") && !item.StartsWith($"{doubleTab}PM"))//private method
@@ -173,6 +202,7 @@
                                 else writer.WriteLine(item.Remove(8, 2));
                             }
                         }
+                        #endregion Sub-Methods
                     }
 
                     else if (item.EndsWith("}\n}")) //}\n} -> } }

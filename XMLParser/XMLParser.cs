@@ -139,7 +139,7 @@ namespace XMLParser
                 if (node.InnerText != null)
                     if (node.InnerText.ToLower() == "true" || node.InnerText.ToLower() == "false")
                         ClassWtriter.SetEncapsulation(node.InnerText);
-                    else Console.WriteLine("NO ENCAPSULATION!");
+                    else Console.WriteLine("WRONG \"ENCAPSULATION\" TAG!");
             #endregion Encapsulation
 
             #region PublicItem
