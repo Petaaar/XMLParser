@@ -129,6 +129,9 @@ namespace XMLParser
                 else if (node.Attributes["type"] == null && node.Attributes["returnType"] != null &&
                         node.Attributes["value"] != null && node.InnerText != null)
                     return new ItemParser(node.Attributes["returnType"].Value, node.Attributes["value"].Value, node.InnerText).Parse();
+                else if (node.Attributes["type"] != null && node.Attributes["returnType"] != null &&
+                        node.Attributes["value"] == null && node.InnerText != null)
+                    return new ItemParser(node.Attributes["type"].Value, node.Attributes["returnType"].Value, node.InnerText, 0).Parse();
 
                 else return $"{error} Invalid or missing XML argument in tag \"{node.Name}\"!";
             }

@@ -32,7 +32,7 @@
 
         public string ProtectionLevel => protectionLevel;
         #endregion Encapsulations
-        
+
         public ItemParser() : this(null, null, null, true) { }
 
         public ItemParser(string returnType, string name) : this(null, returnType, null, name, true) { }
@@ -40,7 +40,9 @@
         public ItemParser(string returnType, string value, string name) : this(null, returnType, value, name, true) { }
 
         /// <param name="isPrivate">IF this is empty it's assigned to true.</param>
-        public ItemParser(string returnType, string value, string name, bool isPrivate) : this(null, returnType, value, name,  isPrivate) { }
+        public ItemParser(string returnType, string value, string name, bool isPrivate) : this(null, returnType, value, name, isPrivate) { }
+
+        public ItemParser(string type, string returnType, string name, uint placeholder) : this(type, returnType, null, name, true) { }
 
         public ItemParser(string type, string returnType, string value, string name) : this(type, returnType, name, value, true) { }
 
@@ -52,7 +54,7 @@
             this.name = name;
             this.value = value;
             this.isPrivate = isPrivate;
-            
+
             if (this.isPrivate)
                 protectionLevel = "private";
             else protectionLevel = "public";
@@ -81,8 +83,11 @@
                 return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
             else if (returnType == "double" && value != null)
                 return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
-            if (value == null)
+            if (value == null && type != null)
                 return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
+            if (value == null && type == null)
+                return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
+
             return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
         }
     }

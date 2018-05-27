@@ -5,13 +5,14 @@
 		<ref using="System.IO"/>
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
-	<class protectionLevel="public" type="abstract" name="MyClass">
+	<class protectionLevel="public" type="sealed" name="MyClass">
 		<privateFields>
 			<item type="static" returnType="string" value="HELLOO">path</item>
 			<item returnType="int">myNumber</item>
+      <item type="readonly" returnType="uint">item</item>
 			<item type="const" returnType="string" value="    ">TAB</item>
 		</privateFields>
-		<encapsulate>false</encapsulate>
+		<encapsulate>true</encapsulate>
 		<publicFields>
       <publicItem type="readonly" returnType="int" value="5">intField</publicItem>
       <publicItem returnType="double" value="6.5">sixAndAHalf</publicItem>
