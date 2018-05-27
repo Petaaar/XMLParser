@@ -133,7 +133,7 @@
                                     {
                                         writer.WriteLine($"{doubleTab}#region Encapsulated");
                                         foreach (string field in forEncapsulation)
-                                            writer.WriteLine(Encapsulator.Parse(field));
+                                            writer.WriteLine(Encapsulator.Encapsulate(field));
                                         writer.WriteLine($"{doubleTab}#endregion Encapsulated");
                                     }
                                 }
