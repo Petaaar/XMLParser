@@ -5,7 +5,7 @@
 		<ref using="System.IO"/>
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
-	<class protectionLevel="public" type="sealed" name="MyClass">
+	<class protectionLevel="public" type="sealed" name="MyClass{T}">
 		<privateFields>
 			<item type="static" returnType="string" value="HELLOO">path</item>
 			<item returnType="int">myNumber</item>
@@ -25,12 +25,14 @@
       <method returnType="void" param="FileStream fileStream">MyMethod</method>
       <method type="static" returnType="void" params="{uint num1, File file}">MultiParams</method>
       <method returnType="int" params="{int a, int b}">Add</method>
+      <method returnType="void" params="{string first, string second}">GenericPrivateMethod{T}</method>
 		</privateMethods>
 		<publicMethods>
 			<publicMethod type="override" returnType="string">ToString</publicMethod>
       <publicMethod returnType="void">VoidMethod</publicMethod>
       <publicMethod type="static" returnType="void" param="int testArgument">TestWParam</publicMethod>
       <publicMethod returnType="double" params="{double one, double two}">PARAMS</publicMethod>
+      <publicMethod returnType="void" params="{string first, string second}">GenericPublicMethod{T}</publicMethod>
 		</publicMethods>
     <constructor param=""/>
     <constructor param="string parameter"/>

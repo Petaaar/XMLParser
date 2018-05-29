@@ -20,7 +20,7 @@
 
         private readonly System.Collections.Generic.List<string> argumentsList;
 
-        private readonly bool isList;
+        private readonly bool isGeneric;
 
         private string classType = XMLParser.ClassType;
         #endregion Private
@@ -35,6 +35,8 @@
         public bool IsPrivate => isPrivate;
 
         public string ProtectionLevel => protectionLevel;
+
+        public bool IsGeneric => isGeneric;
         #endregion Encapsulation
 
         public MethodParser() : this(null,null,null,true, null) { }
@@ -54,7 +56,11 @@
             this.isPrivate = isPrivate;
             this.argument = argument;
 
-
+            if (name.EndsWith("{T}"))
+            {
+                this.name = name.Remove(name.Length - 3, 3);
+                isGeneric = true;
+            }
             if (this.isPrivate)
                 this.protectionLevel = "private";
             else this.protectionLevel = "public";
@@ -68,6 +74,12 @@
             this.name = name;
             this.isPrivate = isPrivate;
             this.argumentsList = argumentsList;
+
+            if (name.EndsWith("{T}"))
+            {
+                this.name = name.Remove(name.Length - 3, 3);
+                isGeneric = true;
+            }
 
 
             if (this.isPrivate)
@@ -87,16 +99,22 @@
             if (argument == null && argumentsList == null)
             {
                 if (type == null) //no type
-                    if (classType == null || classType == "abstract")
+                    if ((classType == null || classType == "abstract") && !isGeneric)
                         return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
+                    else if ((classType == null || classType == "abstract") && isGeneric)
+                        return $"        {fieldLevel}M{protectionLevel} {returnType} {name}<T>()";
                     else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}()";
             }
             
             else if (argument != null && argumentsList == null) //we have only one argument
             {
                 if (type == null) //no type
-                    return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({argument})";
-                else return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({argument})";
+                    if (!isGeneric)
+                        return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({argument})";
+                    else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}<T>({argument})";
+                else if (!isGeneric)
+                    return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({argument})";
+                else return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}<T>({argument})";
             }
 
             else if (argument == null && argumentsList != null)
@@ -111,11 +129,16 @@
 
 
                 if (type != null)
-                    return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({builder.ToString()})";
-                return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({builder.ToString()})";
+                    if (!isGeneric)
+                        return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}({builder.ToString()})";
+                    else return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}<T>({builder.ToString()})";//generic
+                else if (!isGeneric)
+                    return $"        {fieldLevel}M{protectionLevel} {returnType} {name}({builder.ToString()})";
+                else return $"        {fieldLevel}M{protectionLevel} {returnType} {name}<T>({builder.ToString()})"; //generic
             }
-
-            return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}()";
+            if (!isGeneric)
+                return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}()";
+            return $"        {fieldLevel}M{protectionLevel} {type} {returnType} {name}<T>()"; //generic
         }
     }
 }
