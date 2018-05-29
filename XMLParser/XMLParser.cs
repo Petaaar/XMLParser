@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml;
-
+//CURRENTLY 1302 lines of code - 27.05.1018;
 namespace XMLParser
 {
     /// <summary>
@@ -48,7 +48,7 @@ namespace XMLParser
 
         private static string classType;
 
-        public static string ClassType;
+        public static string ClassType => classType;
 
         /// <summary>
         /// Separates the constructor parameters.

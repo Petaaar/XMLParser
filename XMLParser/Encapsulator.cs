@@ -22,22 +22,8 @@
             string[] fieldContent = field.Split(new char[] { ' ' }, System.StringSplitOptions.None);
 
             count = (uint)fieldContent.Length;
-
-            if (fieldContent.Length == 3) //protectionLevel, return type, name
-            {
-                protection = fieldContent[0];
-                returnType = fieldContent[1];
-                name = fieldContent[2];
-            }
-            if (fieldContent.Length == 4) //protectionLevel, type, return type, name
-            {
-                protection = fieldContent[0];
-                type = fieldContent[1];
-                returnType = fieldContent[2];
-                name = fieldContent[3];
-            }
             
-            if (fieldContent.Length >= 6 && fieldContent[4] == "=") // protectionLevel, type, return type, name = value;
+            if (fieldContent.Length >= 6 && fieldContent[4] == "=") // only fields with values could be encapsulated..
             {
                 protection = fieldContent[0];
                 type = fieldContent[1];
