@@ -14,6 +14,8 @@ namespace XMLParser
         //A private booleans to determine if anything listed down is equal to NULL
         private readonly bool noDependencies = true;
 
+        private readonly bool noInherits = true;
+
         private readonly bool noPrivateFields = true;
 
         private readonly bool noPublicFields = true;
@@ -47,6 +49,8 @@ namespace XMLParser
         private static uint publicMethodsCount;
 
         private static string classType;
+
+        public static System.Collections.Generic.List<string> inheritsList = new System.Collections.Generic.List<string>();
 
         public static string ClassType => classType;
 
@@ -101,6 +105,26 @@ namespace XMLParser
                 else return $"{error} Missing \"using\" argument in \"<ref/>\" tag.";
             #endregion Reference
 
+            #region Inherits
+
+            if (node.Name == "inherit" && !this.noInherits)
+                if (node.Attributes["name"] != null)
+                {
+                    var toInherit = node.Attributes["name"].Value;
+                    bool generic = false;
+                    if (toInherit.EndsWith("{T}"))
+                    {
+                        toInherit = toInherit.Remove(toInherit.Length - 3, 3);
+                        generic = true;
+                    }
+                    if (generic)
+                        inheritsList.Add($"{toInherit}<T>");
+                    else inheritsList.Add(toInherit);
+                }
+                else return $"Missing \"name\" argument in tag \"<inherit>\"!";
+
+            #endregion Inherits
+
             #region Class
             if (node.Name == "class") // parsing the class name/type/protection level
                 if (node.Attributes["protectionLevel"] != null && node.Attributes["type"] != null && node.Attributes["name"] != null)
@@ -141,7 +165,7 @@ namespace XMLParser
             if (node.Name == "encapsulate") //encapsulation property
                 if (node.InnerText != null)
                     if (node.InnerText.ToLower() == "true" || node.InnerText.ToLower() == "false")
-                        ClassWtriter.SetEncapsulation(node.InnerText);
+                        ClassWriter.SetEncapsulation(node.InnerText);
                     else Console.WriteLine("WRONG \"ENCAPSULATION\" TAG!");
             #endregion Encapsulation
 
@@ -269,13 +293,14 @@ namespace XMLParser
         /// </summary>
         private void TraceContent()
         {
-            ClassWtriter.SetRefferenceCount((uint)refferences);
-            ClassWtriter.SetPrivateFieldsCount(privateFieldsCount);
-            ClassWtriter.SetPublicFieldsCount(publicFieldsCount);
-            ClassWtriter.SetPrivateMethodsCount(privateMethodsCount);
-            ClassWtriter.SetPublicMethodsCount(publicMethodsCount);
+            ClassWriter.SetRefferenceCount((uint)refferences);
+            ClassWriter.SetPrivateFieldsCount(privateFieldsCount);
+            ClassWriter.SetPublicFieldsCount(publicFieldsCount);
+            ClassWriter.SetPrivateMethodsCount(privateMethodsCount);
+            ClassWriter.SetPublicMethodsCount(publicMethodsCount);
+            ClassWriter.SetInheritsList(inheritsList);
             foreach (string item in xmlContent)
-                ClassWtriter.Parse(item);
+                ClassWriter.Parse(item);
         }
         #endregion Private
 
@@ -314,6 +339,10 @@ namespace XMLParser
                 doc.GetElementsByTagName("dependencies")[0].HasChildNodes)
                 this.noDependencies = false;
 
+            if (doc.GetElementsByTagName("inherits")[0] != null &&
+                doc.GetElementsByTagName("inherits")[0].HasChildNodes)
+                this.noInherits = false;
+
             if (doc.GetElementsByTagName("privateFields")[0] != null &&
                 doc.GetElementsByTagName("privateFields")[0].HasChildNodes)
                 this.noPrivateFields = false;
@@ -333,9 +362,10 @@ namespace XMLParser
             #endregion
 
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
-
+            
             xmlContent.Add(tab+"}\n}"); //add the finishing 2 closing braces ;)
             TraceContent();
+            
         }
 
         /// <summary>

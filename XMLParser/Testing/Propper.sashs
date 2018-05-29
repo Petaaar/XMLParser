@@ -6,6 +6,12 @@
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
 	<class protectionLevel="public" type="sealed" name="MyClass{T}">
+    <inherits>
+      <inherit name="IComparable"/>
+      <inherit name="ICloneable"/>
+      <inherit name="IList{T}"/>
+      <inherit name="Array"/>
+    </inherits>
 		<privateFields>
 			<item type="static" returnType="string" value="HELLOO">path</item>
 			<item returnType="int">myNumber</item>

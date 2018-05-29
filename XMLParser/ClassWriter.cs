@@ -3,7 +3,7 @@
     /// <summary>
     /// This class creates the new, auto-generated class.
     /// </summary>
-    sealed class ClassWtriter
+    sealed class ClassWriter
     {
         #region Private
 
@@ -37,6 +37,8 @@
         private static uint publicMethodsIteration;
         
         private static string classType = XMLParser.ClassType;
+
+        private static System.Collections.Generic.List<string> inheritsList;
 
         /// <summary>
         /// Contains the entire class.
@@ -92,7 +94,10 @@
                     {
                         refferenceIteration++;
                         if (refferenceIteration == 1)
+                        {
                             writer.WriteLine($"{tabulation}#region Dependencies");
+                            writer.WriteLine();
+                        }
                         if (refferenceIteration == refferenceCount)
                         {
                             writer.WriteLine(item);
@@ -104,7 +109,23 @@
                     else if (item.EndsWith(tabulation + "{") && !item.EndsWith(tabulation + "}}")) // class <NAME> \n {
                     {
                         writer.WriteLine($"{tabulation}///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>");
-                        writer.Write(item.Remove(item.Length - 5, 5));
+                        if (inheritsList == null || inheritsList.Count <= 0)
+                            writer.Write(item.Remove(item.Length - 5, 5));
+                        else //the class inherits something
+                        {
+                            if (inheritsList.Count > 1) //the class inherits more than one thing
+                            {
+                                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                                builder.Append(item.Remove(item.Length - 5, 5) + doubleTab + " : ");
+                                for (int i = 0; i < inheritsList.Count; i++)
+                                    if (inheritsList[i] != null && inheritsList[i] != string.Empty)
+                                        if (inheritsList[i] != inheritsList[inheritsList.Count - 1])
+                                            builder.Append($"{inheritsList[i]}, ");
+                                        else builder.Append(inheritsList[i]);
+                                writer.WriteLine(builder.ToString());
+                            }
+                            else writer.WriteLine($"{item.Remove(item.Length - 5, 5)} : {inheritsList[0]}"); //inherits just one thing
+                        }
                         writer.WriteLine(tabulation + "{");
                     }
 
@@ -133,6 +154,7 @@
                                     {
                                         writer.WriteLine($"{doubleTab}#region Encapsulated");
                                         writer.WriteLine();
+                                        writer.WriteLine($"{doubleTab}//this will be displayed ONLY is the <encapsulate> property is set to \"true\"!");
                                         foreach (string field in forEncapsulation)
                                         {
                                             var encapsulatedField = Encapsulator.Encapsulate(field);
@@ -276,6 +298,13 @@
         /// </summary>
         /// <param name="count"></param>
         public static void SetPublicMethodsCount(uint count) => publicMethodsCount = count;
+
+        /// <summary>
+        /// Sets the list of interfaces/classes to extend
+        /// </summary>
+        /// <param name="list"></param>
+        public static void SetInheritsList(System.Collections.Generic.List<string> list) 
+            => inheritsList = new System.Collections.Generic.List<string>(list);
 
         /// <summary>
         /// Saves the current item into the fullClass list.

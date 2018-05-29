@@ -49,7 +49,7 @@
 
         public string ClassName
         {
-            get => className; 
+            get => className;
 
             private set
             {
@@ -59,12 +59,12 @@
         }
 
         public ClassParser() : this(className) { }
-        
-        public ClassParser(string className) : this(null,null,className) { } //for only one argument given
+
+        public ClassParser(string className) : this(null, null, className) { } //for only one argument given
 
         public ClassParser(string protectionLevel, string className) : this(protectionLevel, null, className) { }
-        
-        public ClassParser(string type, int placeholder, string className) : this(null,type,className) { }
+
+        public ClassParser(string type, int placeholder, string className) : this(null, type, className) { }
 
         public ClassParser(string protectionLevel, string type, string className2)
         {

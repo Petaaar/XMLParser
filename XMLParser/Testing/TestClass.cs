@@ -5,6 +5,7 @@ Thanks for using my parser!*/
 namespace MyNamespace
 {
     #region Dependencies
+
     using System;
     using System.IO;
     using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace MyNamespace
 
     ///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>
     public sealed class MyClass<T>
+         : IComparable, ICloneable, IList<T>, Array
     {
         #region Private Fields
 
@@ -28,6 +30,7 @@ namespace MyNamespace
 
         #region Encapsulated
 
+        //this will be displayed ONLY is the <encapsulate> property is set to "true"!
         public string Path { get => path; set => path = value; }
 
         public string TAB { get => TAB; set => TAB = value; }
