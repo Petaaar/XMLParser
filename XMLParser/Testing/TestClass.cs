@@ -12,7 +12,7 @@ namespace MyNamespace
     #endregion Dependencies
 
     ///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>
-    public sealed class MyClass
+    public sealed class MyClass<T>
     {
         #region Private Fields
 
@@ -73,6 +73,11 @@ namespace MyNamespace
         //Write your code here! 
         }
 
+        private void GenericPrivateMethod<T>(string first, string second)
+        { 
+        //Write your code here! 
+        }
+
         #endregion Private Methods
 
         #region Public Methods
@@ -93,6 +98,11 @@ namespace MyNamespace
         }
 
         public double PARAMS(double one, double two)
+        { 
+        //Write your code here! 
+        }
+
+        public void GenericPublicMethod<T>(string first, string second)
         { 
         //Write your code here! 
         }
