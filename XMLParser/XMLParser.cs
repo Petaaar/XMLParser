@@ -50,6 +50,8 @@ namespace XMLParser
 
         private static string classType;
 
+        private static string pathToWrite;
+
         public static System.Collections.Generic.List<string> inheritsList = new System.Collections.Generic.List<string>();
 
         public static string ClassType => classType;
@@ -80,10 +82,7 @@ namespace XMLParser
 
         public static string SetPathForCreatingFile()
         {
-            var path = Console.ReadLine();
-            if (path == "boot") //just for me, MUST BE DELETED AFTER RELEASE!
-                return @"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs";
-            return path;
+            return pathToWrite;
         }
 
         /// <summary>
@@ -322,15 +321,16 @@ namespace XMLParser
             Environment.Exit(0);
         }
 
-        public XMLParser() : this(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\Propper.sashs") { }
-        
-        public XMLParser(string path)
+        public XMLParser()
         {
             XmlDocument doc = new XmlDocument();
 
             xmlContent = new System.Collections.Generic.List<string>();
 
-            doc.Load(path);
+            string path = Console.ReadLine();
+            if (path != "boot")
+                doc.Load(path);
+            else doc.Load(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\Propper.sashs");
 
             #region No-set
             //setting the "NO"-region variables
@@ -360,6 +360,8 @@ namespace XMLParser
                 this.noPublicMethods = false;
 
             #endregion
+
+            pathToWrite = doc.GetElementsByTagName("writeInFile")[0].Attributes["path"].Value;
 
             ParseXML(doc.GetElementsByTagName("nameSpace")[0]);
             

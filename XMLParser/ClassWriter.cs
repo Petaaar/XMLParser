@@ -333,6 +333,7 @@
                     file = System.IO.File.Create(path);
                     file.Close(); 
                 }
+                catch (System.ArgumentException) { Error("The \"<writeInFile/>\" \"path\" argument cannot be null!");  System.Environment.Exit(1); }
                 catch (System.IO.DirectoryNotFoundException) { Error("Please, specify a filename within the path!"); System.Environment.Exit(1); }
                 catch (System.UnauthorizedAccessException) { Error("Could not access the given path!");  System.Environment.Exit(1); }
             }      

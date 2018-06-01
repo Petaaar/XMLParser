@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?><!--An example ".sashs" file to parse. Written by Petar Angelov - Petaaar(17.05.2018)-->
 <nameSpace name="MyNamespace">
+  <writeInFile path="C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\TestClass.cs"/>
 	<dependencies>
 		<ref using="System"/>
 		<ref using="System.IO"/>
