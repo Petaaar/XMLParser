@@ -327,6 +327,7 @@ namespace XMLParser
 
             xmlContent = new System.Collections.Generic.List<string>();
 
+            //IN REALISE MUST BE: doc.Load(Console.ReadLine());
             string path = Console.ReadLine();
             if (path != "boot")
                 doc.Load(path);

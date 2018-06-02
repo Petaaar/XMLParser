@@ -6,9 +6,7 @@
 This is a testing project, I'm trying to create a __fully - automated__ parser from XML-formated file with extension __*.sashs*__ to
 working C# code.
 
-An example picture of the __*Example.sashs*__ file:  
-![example](https://user-images.githubusercontent.com/26832131/40419350-c1cd09b4-5e8d-11e8-921f-1db2c7d715c3.png)  
-
+An example file __*Example.sashs*__ [file](https://github.com/Petaaar/XMLParser/blob/master/XMLParser/Example.sashs).  
 
 ### But how to use it?  
 
@@ -22,6 +20,10 @@ Syntax : __<node argument1="" argument2="">name</node>__. Every node requires so
 __*nameSpace*__ -> The __starting__ program node. Everything out of it is ignored.
 ###### Parameters:  
 name="" -> __*Required*__ __non-empty__ parameter. If is empty or does not exists the program will throw an __EXCEPTION__.   
+
+__*writeInFile*__ -> The node that determines where the new class will be created.  
+###### Parameters:  
+path="" -> __*Required*__ __non-empty__ parameter. If it's empty you'll get __error__ message!  
 
 __*dependencies*__ -> Represents a list of all __assembly refferences__ needed. Has no parameters.  
 
