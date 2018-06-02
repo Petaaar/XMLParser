@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?><!--An example ".sashs" file to parse. Written by Petar Angelov - Petaaar(12.05.2018)-->
 <nameSpace name="SASH.Custom">
+  <writeInFile path="YOUR_PATH"/>
 	<dependencies>
 		<ref using="System"/>
     <ref using="System.IO"/>
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
 	<class protectionLevel="private/public/internal" name="className">
+    <inherits>
+      <inherit name="IComparable"/>
+      <inherit name="IList{T}"/>
+      <inherit name="Array"/>
+    </inherits>
 		<privateFields>
 			<item type="static/readonly/const/none" returnType="allTypes/void" value="">path</item>
 			<item type="static/readonly/const/none" returnType="allTypes/void" value="">path1</item>
@@ -18,10 +24,16 @@
       <publicItem type="static/readonly/const/none" returnType="allTypes/void" value="">itemName2</publicItem>
 		</publicFields>
 		<privateMethods>
-			<method type="static/virtual/abstract/none" returnType="allTypes/void">privateMethodName</method>
-		</privateMethods>
+			<method type="static/virtual/abstract/none" returnType="allTypes/void">privateMethodName</method> 
+      <method type="static/virtual/abstract/none" returnType="allTypes/void" param="">privateMethodWithArgument</method>
+      <method type="static/virtual/abstract/none" returnType="allTypes/void" params="{}">privateMethodWithArguments</method>
+    </privateMethods>
 		<publicMethods>
 			<publicMethod type="static/virtual/abstract/none" returnType="allTypes/void">publicMethodName</publicMethod>
+      <publicMethod type="static/virtual/abstract/none" returnType="allTypes/void" param="">publicMethodWithParam</publicMethod>
+      <publicMethod type="static/virtual/abstract/none" returnType="allTypes/void" params="{}">publicMethodWithParams</publicMethod> 
 		</publicMethods>
+    <constructor param="string[] arrayArgument"/>
+    <constructor params="{string stringArgument, int integerArgument}"/>
 	</class>
 </nameSpace>
