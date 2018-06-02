@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XMLParser.ClassParser" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIAAAACAAAAAAAABAAAAAACBAAAAgQAAAAAAAAA=</HashCode>
+      <FileName>ClassParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="XMLParser.ClassWriter" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIgAAAAACBACQBFACIEBIgAAUBBIAAAEMAACMAAAUA=</HashCode>
+      <FileName>ClassWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLParser.ConstuctorGenerator" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAoEIAAAAAAAAAAAAAAAAQAAACAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>ConstuctorGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="XMLParser.Encapsulator" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAQAAAAABAAABAgAAAAAAAQFAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Encapsulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLParser.ItemParser" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABgAAAAQAAABAAAAAAAAAQAAACFACAAgQAgAAAEAAA=</HashCode>
+      <FileName>ItemParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="XMLParser.MethodParser" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABgAAAAQAAABAAAAAABAAQAAQClAAAAgQAAAAAEAEA=</HashCode>
+      <FileName>MethodParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="XMLParser.XMLParser" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAQSAAAAAAAAAAAIUQIAAAAQBAIIwQAIAgBCIwEEA=</HashCode>
+      <FileName>XMLParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IParser" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

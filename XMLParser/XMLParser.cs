@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml;
-//CURRENTLY 1302 lines of code - 27.05.1018;
+//CURRENTLY 1414 lines of code - 02.06.1018;
 namespace XMLParser
 {
     /// <summary>
