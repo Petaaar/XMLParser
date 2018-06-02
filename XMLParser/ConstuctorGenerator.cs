@@ -10,7 +10,7 @@
 
         private string protectionLevel;
 
-        private System.Collections.Generic.List<string> parametersList;
+        private System.Collections.Specialized.StringCollection parametersList;
 
         private bool isList;
 
@@ -26,12 +26,12 @@
             this.parameter = parameter;
         }
 
-        public ConstuctorGenerator(System.Collections.Generic.List<string> parametersList) : this(null, parametersList) { }
+        public ConstuctorGenerator(System.Collections.Specialized.StringCollection parametersList) : this(null, parametersList) { }
 
-        public ConstuctorGenerator(string protectionLevel, System.Collections.Generic.List<string> parametersList)
+        public ConstuctorGenerator(string protectionLevel, System.Collections.Specialized.StringCollection parametersList)
         {
             this.protectionLevel = protectionLevel;
-            this.parametersList = new System.Collections.Generic.List<string>(parametersList);
+            this.parametersList = parametersList;
             this.isList = true;
         }
         

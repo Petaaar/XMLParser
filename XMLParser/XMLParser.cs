@@ -62,23 +62,23 @@ namespace XMLParser
         /// </summary>
         /// <param name="parameters">Parameters.</param>
         /// <returns><see cref="System.Collections.Generic.List{T}"/></returns>
-        public static System.Collections.Generic.List<string> GetConstructorParameters(string parameters)
+        public static System.Collections.Specialized.StringCollection GetConstructorParameters(string parameters)
         {
             var paramsArr = parameters.Split(new char[] { '{', '}', ',' },StringSplitOptions.None);
-            var returnList = new System.Collections.Generic.List<string>();
+            var returnCollection = new System.Collections.Specialized.StringCollection();
 
             foreach (var item in paramsArr)
             {
                 if (item.StartsWith("{"))
-                    returnList.Add(item.Remove(0, 1));
+                    returnCollection.Add(item.Remove(0, 1));
                 if (item.EndsWith("}"))
-                    returnList.Add(item.Remove(item.Length - 1, 1));
+                    returnCollection.Add(item.Remove(item.Length - 1, 1));
                 if (item.EndsWith(","))
-                    returnList.Add(item.Remove(item.Length - 1, 1) + ", ");
-                else returnList.Add(item);
+                    returnCollection.Add(item.Remove(item.Length - 1, 1) + ", ");
+                else returnCollection.Add(item);
             }
 
-            return returnList;
+            return returnCollection;
         }
 
         public static string SetPathForCreatingFile()

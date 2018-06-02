@@ -46,7 +46,7 @@
         private static System.Collections.Specialized.StringCollection fullClass = new System.Collections.Specialized.StringCollection();
 
         /// <summary>
-        /// A <see cref="System.Collections.Generic.List{T}"/> of PRIVATE FIELDS to be encapsulated.
+        /// A <see cref="System.Collections.Specialized.StringCollection"/> of PRIVATE FIELDS to be encapsulated.
         /// </summary>
         private static System.Collections.Specialized.StringCollection forEncapsulation;
 
@@ -394,7 +394,7 @@
 
                 var properties = item.Split(new char[] {' '}, System.StringSplitOptions.None);
 
-                var list = new System.Collections.Generic.List<string>();
+                var list = new System.Collections.Generic.List<string>(); //too lazy to write ToArray() method for StringCollection..
 
                 foreach (string innerItem in properties)
                     if (innerItem == string.Empty)

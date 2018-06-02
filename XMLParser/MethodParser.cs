@@ -18,7 +18,7 @@
 
         private readonly string argument;
 
-        private readonly System.Collections.Generic.List<string> argumentsList;
+        private readonly System.Collections.Specialized.StringCollection argumentsList;
 
         private readonly bool isGeneric;
 
@@ -66,7 +66,7 @@
             else this.protectionLevel = "public";
         }
 
-        public MethodParser(string type, string returnType, string name, bool isPrivate, System.Collections.Generic.List<string> argumentsList)
+        public MethodParser(string type, string returnType, string name, bool isPrivate, System.Collections.Specialized.StringCollection argumentsList)
         {
 
             this.type = type;
