@@ -90,13 +90,13 @@
                         writer.WriteLine("{");
                     }
 
-                    else if (item.StartsWith($"{tabulation}using")) //using <ASSEMBLY_REFFERENCE>
+                    else if (item.StartsWith($"{tabulation}using")) //using <ASSEMBLY_REFERENCE>
                     {
                         refferenceIteration++;
                         if (refferenceIteration == 1)
                         {
                             writer.WriteLine($"{tabulation}#region Dependencies");
-                            writer.WriteLine();
+                            writer.WriteLine("    //this region contains all assembly references used in the class");
                         }
                         if (refferenceIteration == refferenceCount)
                         {
@@ -115,7 +115,7 @@
                         {
                             if (inheritsList.Count > 1) //the class inherits more than one thing
                             {
-                                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                                var builder = new System.Text.StringBuilder();
                                 builder.Append(item.Remove(item.Length - 5, 5) + doubleTab + " : ");
                                 for (int i = 0; i < inheritsList.Count; i++)
                                     if (inheritsList[i] != null && inheritsList[i] != string.Empty)
@@ -147,6 +147,7 @@
                                 {
                                     if (forEncapsulation != null)
                                         forEncapsulation.Add(item.Remove(8, 1));
+                                    writer.WriteLine($"{doubleTab}///<summary>Add your summary for the field here!</summary>");
                                     writer.WriteLine(item.Remove(8, 1));
                                     writer.WriteLine($"{doubleTab}#endregion Private Fields");
                                     writer.WriteLine();
@@ -172,6 +173,7 @@
                                 {
                                     if (forEncapsulation != null)
                                         forEncapsulation.Add(item.Remove(8, 1));
+                                    writer.WriteLine($"{doubleTab}///<summary>Add your summary for the field here!</summary>");
                                     writer.WriteLine(item.Remove(8, 1));
                                 }
                             }
@@ -186,11 +188,16 @@
                                 }
                                 if (publicFieldsIteration == publicFieldsCount)
                                 {
+                                    writer.WriteLine($"{doubleTab}///<summary>Add your summary for the field here!</summary>");
                                     writer.WriteLine(item.Remove(8, 1));
                                     writer.WriteLine($"{doubleTab}#endregion Public Fields");
                                     writer.WriteLine();
                                 }
-                                else writer.WriteLine(item.Remove(8, 1));
+                                else
+                                {
+                                    writer.WriteLine($"{doubleTab}///<summary>Add your summary for the field here!</summary>");
+                                    writer.WriteLine(item.Remove(8, 1));
+                                }
                             }
                         }
                         #endregion Sub- Fields
@@ -208,11 +215,16 @@
                                 }
                                 if (privateMethodsIteration == privateMehtodsCount)
                                 {
+                                    writer.WriteLine($"{doubleTab}///<summary>Write your summary for the method here!</summary>");
                                     writer.WriteLine(item.Remove(8, 2));
                                     writer.WriteLine($"{doubleTab}#endregion Private Methods");
                                     writer.WriteLine();
                                 }
-                                else writer.WriteLine(item.Remove(8, 2));
+                                else
+                                {
+                                    writer.WriteLine($"{doubleTab}///<summary>Write your summary for the method here!</summary>");
+                                    writer.WriteLine(item.Remove(8, 2));
+                                }
                             }
                             if (item.StartsWith($"{doubleTab}PM") && !item.StartsWith($"{doubleTab}NM")) //public method
                             {
@@ -225,17 +237,31 @@
                                 }
                                 if (publicMethodsIteration == publicMethodsCount)
                                 {
+                                    writer.WriteLine($"{doubleTab}///<summary>Write your summary for the method here!</summary>");
                                     writer.WriteLine(item.Remove(8, 2));
                                     writer.WriteLine($"{doubleTab}#endregion Public Methods");
                                     writer.WriteLine();
                                     writer.WriteLine();
                                 }
-                                else writer.WriteLine(item.Remove(8, 2));
+                                else
+                                {
+                                    writer.WriteLine($"{doubleTab}///<summary>Write your summary for the method here!</summary>");
+                                    writer.WriteLine(item.Remove(8, 2));
+                                }
                             }
                         }
                         #endregion Sub-Methods
                     }
-
+                    else if (item.StartsWith($"{doubleTab}CTOR") && item.EndsWith("\n{\n}\n"))
+                    {
+                        writer.WriteLine($"{doubleTab}///<summary>Constructor. Generates a new instance of the class.</summary>");
+                        var item2 = item.Remove(8, 4);
+                        writer.WriteLine(item2.Remove(item2.Length - 5, 5));
+                        writer.WriteLine(doubleTab + '{');
+                        writer.WriteLine($"{doubleTab}//Write your code here!");
+                        writer.WriteLine(doubleTab + '}');
+                        writer.WriteLine();
+                    }
                     else if (item.EndsWith("}\n}")) //}\n} -> } }
                     {
                         writer.WriteLine(item.Remove(item.Length - 1, 1));
@@ -420,7 +446,7 @@
             #region Constructors checking
 
             if (item.StartsWith($"{doubleTab}CTOR"))
-                return item.Remove(8, 4) + "\n{\n}\n";
+                return item + "\n{\n}\n";
 
             #endregion Constructors checking
 

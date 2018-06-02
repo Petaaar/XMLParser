@@ -47,6 +47,7 @@
     <Compile Include="ClassParser.cs" />
     <Compile Include="ClassWriter.cs" />
     <Compile Include="ConstuctorGenerator.cs" />
+    <Compile Include="Encapsulator.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="ItemParser.cs" />
     <Compile Include="MethodParser.cs" />
