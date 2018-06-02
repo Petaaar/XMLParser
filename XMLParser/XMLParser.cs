@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 //CURRENTLY 1414 lines of code - 02.06.1018;
+//if the program uses System.Collections.Specialized.StringCollection instead of System.Collections.Generic.List<T>, it's more than 10 times faster!
 namespace XMLParser
 {
     /// <summary>
@@ -323,7 +324,7 @@ namespace XMLParser
 
         public XMLParser()
         {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
 
             xmlContent = new System.Collections.Specialized.StringCollection();
 
