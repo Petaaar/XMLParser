@@ -38,17 +38,17 @@
         
         private static string classType = XMLParser.ClassType;
 
-        private static System.Collections.Generic.List<string> inheritsList;
+        private static System.Collections.Specialized.StringCollection inheritsList;
 
         /// <summary>
         /// Contains the entire class.
         /// </summary>
-        private static System.Collections.Generic.List<string> fullClass = new System.Collections.Generic.List<string>();
+        private static System.Collections.Specialized.StringCollection fullClass = new System.Collections.Specialized.StringCollection();
 
         /// <summary>
         /// A <see cref="System.Collections.Generic.List{T}"/> of PRIVATE FIELDS to be encapsulated.
         /// </summary>
-        private static System.Collections.Generic.List<string> forEncapsulation;
+        private static System.Collections.Specialized.StringCollection forEncapsulation;
 
         #endregion fields
 
@@ -65,7 +65,7 @@
         /// Writes a given <paramref name="fileContent"/> into a file.
         /// </summary>
         /// <param name="fileContent">The content to be written.</param>
-        private static void WriteFile(System.Collections.Generic.List<string> fileContent)
+        private static void WriteFile(System.Collections.Specialized.StringCollection fileContent)
         {
             refferenceIteration = 0;
             privateFieldsIteration = 0;
@@ -73,7 +73,7 @@
             privateMethodsIteration = 0;
             publicMethodsIteration = 0;
 
-            forEncapsulation = encapsulate ? new System.Collections.Generic.List<string>() : null;
+            forEncapsulation = encapsulate ? new System.Collections.Specialized.StringCollection() : null;
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(pathTo))
             {
@@ -329,8 +329,8 @@
         /// Sets the list of interfaces/classes to extend
         /// </summary>
         /// <param name="list"></param>
-        public static void SetInheritsList(System.Collections.Generic.List<string> list) 
-            => inheritsList = new System.Collections.Generic.List<string>(list);
+        public static void SetInheritsList(System.Collections.Specialized.StringCollection collection)
+            => inheritsList = collection;
 
         /// <summary>
         /// Saves the current item into the fullClass list.

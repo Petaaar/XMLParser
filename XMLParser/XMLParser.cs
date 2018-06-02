@@ -26,9 +26,9 @@ namespace XMLParser
         #endregion NO
 
         /// <summary>
-        /// <see cref="System.Collections.Generic.List{string}"/> containing everything from the .sashs file.
+        /// <see cref="System.Collections.Specialized.StringCollection"/> containing everything from the .sashs file.
         /// </summary>
-        private System.Collections.Generic.List<string> xmlContent;
+        private readonly System.Collections.Specialized.StringCollection xmlContent;
         
         private const string error = "//ERROR:";
 
@@ -52,7 +52,7 @@ namespace XMLParser
 
         private static string pathToWrite;
 
-        public static System.Collections.Generic.List<string> inheritsList = new System.Collections.Generic.List<string>();
+        public static System.Collections.Specialized.StringCollection inheritsList = new System.Collections.Specialized.StringCollection();
 
         public static string ClassType => classType;
 
@@ -325,7 +325,7 @@ namespace XMLParser
         {
             XmlDocument doc = new XmlDocument();
 
-            xmlContent = new System.Collections.Generic.List<string>();
+            xmlContent = new System.Collections.Specialized.StringCollection();
 
             //IN REALISE MUST BE: doc.Load(Console.ReadLine());
             string path = Console.ReadLine();
