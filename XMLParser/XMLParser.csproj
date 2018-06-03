@@ -55,6 +55,7 @@
     <Compile Include="XMLParser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Testing\2_06_2018.cd" />
     <None Include="App.config" />
     <None Include="Testing\Propper.sashs">
       <SubType>Designer</SubType>

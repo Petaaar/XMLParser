@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Xml;
+using System.Runtime.InteropServices;
+
 //CURRENTLY 1414 lines of code - 02.06.1018;
 //if the program uses System.Collections.Specialized.StringCollection instead of System.Collections.Generic.List<T>, it's more than 10 times faster!
 namespace XMLParser
@@ -7,6 +9,9 @@ namespace XMLParser
     /// <summary>
     /// A class to parse from XML to C# code.
     /// </summary>
+    [System.Security.SecurityCritical]
+    [ComVisible(true)]
+    [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
     class XMLParser
     {
         #region Private
@@ -49,13 +54,11 @@ namespace XMLParser
 
         private static uint publicMethodsCount;
 
-        private static string classType;
-
         private static string pathToWrite;
 
         public static System.Collections.Specialized.StringCollection inheritsList = new System.Collections.Specialized.StringCollection();
 
-        public static string ClassType => classType;
+        public static string ClassType { get; private set; }
 
         /// <summary>
         /// Separates the constructor parameters.
@@ -137,7 +140,7 @@ namespace XMLParser
                 else return new ClassParser(node.Attributes["name"].Value).Parse();
             #endregion Class
 
-            if (node.Name == "class" && node.Attributes["type"] != null) classType = node.Attributes["type"].Value;
+            if (node.Name == "class" && node.Attributes["type"] != null) ClassType = node.Attributes["type"].Value;
 
             #region Item
             if (node.Name == "item" && !this.noPrivateFields) //parsing PRIVATE fields

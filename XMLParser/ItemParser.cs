@@ -1,36 +1,27 @@
-﻿namespace XMLParser
+﻿using System.Runtime.InteropServices;
+
+namespace XMLParser
 {
     /// <summary>
     /// A class that parses every type of field. Cannot be inherited.
     /// </summary>
+    [System.Security.SecurityCritical]
+    [ComVisible(true)]
+    [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
     sealed class ItemParser : IParser
     {
-        #region Private
-        private string type;
-
-        private string returnType;
-
-        private string name;
-
-        private string value;
-
-        private readonly bool isPrivate;
-
-        private readonly string protectionLevel;
-        #endregion
-
         #region Encapsulations
-        public string Type { get => type; private set => type = value; }
+        public string Type { get; private set; }
 
-        public string ReturnType { get => returnType; set => returnType = value; }
+        public string ReturnType { get; set; }
 
-        public string Value { get => value; set => this.value = value; }
+        public string Value { get; set; }
 
-        public string Name { get => name; set => name = value; }
+        public string Name { get; set; }
 
-        public bool IsPrivate => isPrivate;
+        public bool IsPrivate { get; }
 
-        public string ProtectionLevel => protectionLevel;
+        public string ProtectionLevel { get; }
         #endregion Encapsulations
 
         public ItemParser() : this(null, null, null, true) { }
@@ -49,15 +40,15 @@
         /// <param name="isPrivate">If this parameter is null it's assigned to true.</param>
         public ItemParser(string type, string returnType, string value, string name, bool isPrivate)
         {
-            this.type = type;
-            this.returnType = returnType;
-            this.name = name;
-            this.value = value;
-            this.isPrivate = isPrivate;
+            this.Type = type;
+            this.ReturnType = returnType;
+            this.Name = name;
+            this.Value = value;
+            this.IsPrivate = isPrivate;
 
-            if (this.isPrivate)
-                protectionLevel = "private";
-            else protectionLevel = "public";
+            if (this.IsPrivate)
+                ProtectionLevel = "private";
+            else ProtectionLevel = "public";
         }
 
         /// <summary>
@@ -66,29 +57,29 @@
         /// <returns>New field as string.</returns>
         public string Parse()
         {
-            char fieldLevel = (protectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
+            char fieldLevel = (ProtectionLevel == "private") ? fieldLevel = 'N' : fieldLevel = 'P';
 
-            if (type == null) //no type
-                if (returnType == "void" && value != null)
-                    return $"        {fieldLevel}{protectionLevel} {returnType} {name} = {value}";
-                else if (returnType == "void" && value == null)
-                    return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
-            if (returnType == "void")
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
-            else if (returnType == "string" && value != null) //MUST swap value and name...idk why..
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {value} = \"{name}\"";
-            else if (returnType == "bool" && value != null)
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
-            else if (returnType == "int" && value != null)
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
-            else if (returnType == "double" && value != null)
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
-            if (value == null && type != null)
-                return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name}";
-            if (value == null && type == null)
-                return $"        {fieldLevel}{protectionLevel} {returnType} {name}";
+            if (Type == null) //no type
+                if (ReturnType == "void" && Value != null)
+                    return $"        {fieldLevel}{ProtectionLevel} {ReturnType} {Name} = {Value}";
+                else if (ReturnType == "void" && Value == null)
+                    return $"        {fieldLevel}{ProtectionLevel} {ReturnType} {Name}";
+            if (ReturnType == "void")
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name}";
+            else if (ReturnType == "string" && Value != null) //MUST swap value and name...idk why..
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Value} = \"{Name}\"";
+            else if (ReturnType == "bool" && Value != null)
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name} = {Value}";
+            else if (ReturnType == "int" && Value != null)
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name} = {Value}";
+            else if (ReturnType == "double" && Value != null)
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name} = {Value}";
+            if (Value == null && Type != null)
+                return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name}";
+            if (Value == null && Type == null)
+                return $"        {fieldLevel}{ProtectionLevel} {ReturnType} {Name}";
 
-            return $"        {fieldLevel}{protectionLevel} {type} {returnType} {name} = {value}";
+            return $"        {fieldLevel}{ProtectionLevel} {Type} {ReturnType} {Name} = {Value}";
         }
     }
 }

@@ -1,8 +1,13 @@
-﻿namespace XMLParser
+﻿using System.Runtime.InteropServices;
+
+namespace XMLParser
 {
     /// <summary>
     /// Parses the "class" property of the XML file.
     /// </summary>
+    [System.Security.SecurityCritical]
+    [ComVisible(true)]
+    [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
     class ClassParser : IParser
     {
         #region Private

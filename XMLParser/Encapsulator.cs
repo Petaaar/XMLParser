@@ -1,8 +1,13 @@
-﻿namespace XMLParser
+﻿using System.Runtime.InteropServices;
+
+namespace XMLParser
 {
     /// <summary>
     /// This class generates the encapsulations for the private fields in the new class.
     /// </summary>
+    [System.Security.SecurityCritical]
+    [ComVisible(true)]
+    [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
     static class Encapsulator
     {
         private static string protection;

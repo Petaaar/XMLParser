@@ -1,13 +1,19 @@
-﻿namespace XMLParser
+﻿using System.Runtime.InteropServices;
+
+namespace XMLParser
 {
     /// <summary>
     /// This class creates the new, auto-generated class.
     /// </summary>
+    [System.Security.SecurityCritical]
+    [ComVisible(true)]
+    [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
     sealed class ClassWriter
     {
         #region Private
 
         #region fields
+
         private readonly static string pathTo = XMLParser.SetPathForCreatingFile();
 
         private const string tabulation = "    ";
