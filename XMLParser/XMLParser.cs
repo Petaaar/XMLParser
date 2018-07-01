@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 //CURRENTLY 1414 lines of code - 02.06.1018;
 //if the program uses System.Collections.Specialized.StringCollection instead of System.Collections.Generic.List<T>, it's more than 10 times faster!
@@ -12,7 +13,7 @@ namespace XMLParser
     [System.Security.SecurityCritical]
     [ComVisible(true)]
     [Guid("f1f8ca04-77f6-46bd-80f5-0dc025fe823b")]
-    class XMLParser
+    public class XMLParser
     {
         #region Private
 
@@ -405,6 +406,45 @@ namespace XMLParser
             xmlContent.Add(tab+"}\n}"); //add the finishing 2 closing braces ;)
             TraceContent();
             
+        }
+
+        /// <summary>
+        /// This constructor must be used in XMLParser_GUI!
+        /// </summary>
+        /// <param name="path"></param>
+        public XMLParser(string path)
+        {
+            var doc = new XmlDocument();
+
+            if (!path.EndsWith(".sashs"))
+            {
+                MessageBox.Show("The file must have the extension \".sashs\"!");
+                Main();
+            }
+            else
+            {
+                try
+                {
+                    doc.Load(path);
+                }
+                catch (XmlException)
+                {
+                    MessageBox.Show("Invalid XML in the given path.");
+                    Main();
+                }
+                catch (System.IO.IOException)
+                {
+                    MessageBox.Show($"Cannot find the file or path \"{path}\"!");
+                    Main();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show($"Cannot access file or path \"{path}\"!");
+                    Main();
+                }
+            }
+
+            MessageBox.Show("File parsed successfully!");
         }
 
         /// <summary>
