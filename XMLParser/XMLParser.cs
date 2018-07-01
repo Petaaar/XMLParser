@@ -331,11 +331,43 @@ namespace XMLParser
 
             xmlContent = new System.Collections.Specialized.StringCollection();
 
-            //IN REALISE MUST BE: doc.Load(Console.ReadLine());
-            string path = Console.ReadLine();
-            if (path != "boot")
-                doc.Load(path);
-            else doc.Load(@"C:\Users\petar\source\repos\XMLParser\XMLParser\Testing\Propper.sashs");
+            
+            var path = Console.ReadLine();
+            if (!path.EndsWith(".sashs"))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The file must have the extension \".sashs\"!");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Main();
+            }
+            else
+            {
+                try
+                {
+                    doc.Load(path);
+                }
+                catch (XmlException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid XML in the given path.");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Main();
+                }
+                catch (System.IO.IOException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Cannot find the file or path \"{path}\"!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Main();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Cannot access file or path \"{path}\"!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Main();
+                }
+            }
 
             #region No-set
             //setting the "NO"-region variables

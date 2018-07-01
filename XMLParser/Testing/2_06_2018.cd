@@ -23,13 +23,6 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="XMLParser.Encapsulator" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAQAAAAABAAABAgAAAAAAAQFAAAAAAgAAAAAAAA=</HashCode>
-      <FileName>Encapsulator.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="XMLParser.ItemParser" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -49,8 +42,15 @@
   <Class Name="XMLParser.XMLParser" Collapsed="true">
     <Position X="3.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgIAQSAAAAAAAAAAAIUQIAAAAQBAIIwQAIAgBCIwEEA=</HashCode>
+      <HashCode>AgIAQSAAAAAAAAAAAIUQIAAAAQBAIIwQAIAgBCIwEAA=</HashCode>
       <FileName>XMLParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLParser.Encapsulator" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAQAAAAABAAABAgAAAAAAAQFAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Encapsulator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="IParser" Collapsed="true">

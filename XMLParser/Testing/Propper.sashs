@@ -6,7 +6,7 @@
 		<ref using="System.IO"/>
 		<ref using="System.Collections.Generic"/>
 	</dependencies> 
-	<class protectionLevel="public" type="sealed" name="MyClass{T}">
+	<class protectionLevel="public" type="sealed" name="Class{T}">
     <inherits>
       <inherit name="IComparable"/>
       <inherit name="ICloneable"/>

@@ -73,19 +73,27 @@ namespace XMLParser
 
         public ClassParser(string protectionLevel, string type, string className2)
         {
-            this.protectionLevel = protectionLevel;
-            this.type = type;
-
-            if (className2 != null && className2 != string.Empty)
-                className = className2;
-
-            if (className2.EndsWith("{T}"))
+            try
             {
-                className = className2.Remove(className2.Length - 3, 3);
-                isGeneric = true;
+
+                this.protectionLevel = protectionLevel;
+                this.type = type;
+
+                if (className2 != null && className2 != string.Empty)
+                    className = className2;
+
+                if (className2.EndsWith("{T}"))
+                {
+                    className = className2.Remove(className2.Length - 3, 3);
+                    isGeneric = true;
+                }
+                if (className == null) System.Console.WriteLine("NO CLASS NAME!");
+                if (className == string.Empty) System.Console.WriteLine("EMPTY CLASS NAME!");
             }
-            if (className == null) System.Console.WriteLine("NO CLASS NAME!");
-            if (className == string.Empty) System.Console.WriteLine("EMPTY CLASS NAME!");
+            catch (System.NullReferenceException )
+            {
+                className = "MyClass";
+            }
         }
 
         public string Parse()

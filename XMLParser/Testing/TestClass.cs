@@ -13,7 +13,7 @@ namespace MyNamespace
     #endregion Dependencies
 
     ///<summary>A class, generated automatically via XMLParser. WRITE YOUR SUMMARY HERE!</summary>
-    public sealed class MyClass<T>
+    public sealed class Class<T>
          : IComparable, ICloneable, IList<T>, Array
     {
         #region Private Fields
@@ -133,31 +133,31 @@ namespace MyNamespace
 
 
         ///<summary>Constructor. Generates a new instance of the class.</summary>
-        public MyClass()
+        public Class()
         {
         //Write your code here!
         }
 
         ///<summary>Constructor. Generates a new instance of the class.</summary>
-        public MyClass(string parameter)
+        public Class(string parameter)
         {
         //Write your code here!
         }
 
         ///<summary>Constructor. Generates a new instance of the class.</summary>
-        protected MyClass(int param)
+        protected Class(int param)
         {
         //Write your code here!
         }
 
         ///<summary>Constructor. Generates a new instance of the class.</summary>
-        public MyClass(int param1, uint param2)
+        public Class(int param1, uint param2)
         {
         //Write your code here!
         }
 
         ///<summary>Constructor. Generates a new instance of the class.</summary>
-        protected MyClass(uint param1, string param2)
+        protected Class(uint param1, string param2)
         {
         //Write your code here!
         }
